@@ -3,340 +3,867 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sClicker - Auto Clicker</title>
+  <title>sClicker - The Ultimate Auto Clicker</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    :root {
+      --purple-primary: #a855f7;
+      --purple-dark: #7e22ce;
+      --purple-light: #c084fc;
+      --bg-dark: #0d0d0d;
+      --bg-card: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #a3a3a3;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #000;
-      color: #e5e5e5;
-      line-height: 1.6;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      overflow-x: hidden;
     }
 
-    .container {
-      max-width: 1100px;
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    .bg-animation::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--purple-primary) 0%, transparent 70%);
+      top: -250px;
+      right: -200px;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .bg-animation::after {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--purple-dark) 0%, transparent 70%);
+      bottom: -150px;
+      left: -150px;
+      animation: float 15s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(50px, 50px) scale(1.1); }
+    }
+
+    /* Navigation */
+    nav {
+      padding: 2rem 0;
+      position: sticky;
+      top: 0;
+      background: rgba(13, 13, 13, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    header {
-      padding: 80px 0 120px;
-      text-align: center;
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    h1 {
-      font-size: 4rem;
-      color: #9333ea;
-      font-weight: 700;
-      margin-bottom: 20px;
-      letter-spacing: -1px;
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
     }
 
-    .tagline {
-      font-size: 1.25rem;
-      color: #888;
-      margin-bottom: 40px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .cta-button {
-      display: inline-block;
-      background: #9333ea;
-      color: #fff;
-      padding: 16px 48px;
-      border-radius: 8px;
+    .nav-links a {
+      color: var(--text-secondary);
       text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--purple-primary);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 8rem 2rem 6rem;
+      position: relative;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: 5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #ffffff 0%, var(--purple-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-text .highlight {
+      display: block;
+      color: var(--purple-primary);
+      -webkit-text-fill-color: var(--purple-primary);
+    }
+
+    .hero-text p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2.5rem;
+      border-radius: 12px;
       font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.2s;
-      border: 2px solid #9333ea;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+      color: white;
+      box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(168, 85, 247, 0.5);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid var(--purple-primary);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(168, 85, 247, 0.1);
+      transform: translateY(-3px);
+    }
+
+    /* Hero Visual */
+    .hero-visual {
+      position: relative;
+    }
+
+    .click-demo {
+      background: linear-gradient(135deg, var(--bg-card), #252525);
+      border-radius: 24px;
+      padding: 3rem;
+      border: 1px solid rgba(168, 85, 247, 0.2);
       position: relative;
       overflow: hidden;
     }
 
-    .cta-button::before {
+    .click-demo::before {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -60%;
-      width: 40%;
-      height: 200%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.6),
-        transparent
-      );
-      transform: skewX(-25deg);
-      animation: shine 2.5s infinite;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), transparent);
+      pointer-events: none;
     }
 
-    @keyframes shine {
-      0% {
-        left: -60%;
-      }
-      20% {
-        left: 120%;
-      }
-      100% {
-        left: 120%;
-      }
-    }
-
-    .cta-button:hover {
-      background: #7c3aed;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(147, 51, 234, 0.3);
-    }
-
-    .social-bar {
-      margin-top: 40px;
+    .demo-screen {
+      background: #0a0a0a;
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      min-height: 300px;
       display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
-    .social-link {
+    .demo-control {
+      background: rgba(168, 85, 247, 0.1);
+      border: 2px solid var(--purple-primary);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .demo-control span {
+      font-weight: 600;
+      color: var(--purple-light);
+    }
+
+    .demo-toggle {
+      width: 60px;
+      height: 30px;
+      background: var(--purple-primary);
+      border-radius: 15px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .demo-toggle::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.3s;
+    }
+
+    .demo-clicks {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .click-indicator {
+      aspect-ratio: 1;
+      background: rgba(168, 85, 247, 0.05);
+      border: 2px solid rgba(168, 85, 247, 0.3);
+      border-radius: 12px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      background: #0a0a0a;
-      border: 1px solid #222;
-      border-radius: 6px;
-      color: #aaa;
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: all 0.2s;
-    }
-
-    .social-link:hover {
-      border-color: #9333ea;
-      color: #fff;
-      background: #111;
-    }
-
-    .social-link img {
-      width: 20px;
-      height: 20px;
-    }
-
-    .features {
-      padding: 60px 0;
-    }
-
-    .section-title {
+      justify-content: center;
       font-size: 2rem;
-      color: #fff;
-      margin-bottom: 50px;
-      text-align: center;
-      font-weight: 600;
+      animation: pulse 2s ease-in-out infinite;
     }
 
-    .feature-grid {
+    .click-indicator:nth-child(2) { animation-delay: 0.3s; }
+    .click-indicator:nth-child(3) { animation-delay: 0.6s; }
+    .click-indicator:nth-child(4) { animation-delay: 0.9s; }
+    .click-indicator:nth-child(5) { animation-delay: 1.2s; }
+    .click-indicator:nth-child(6) { animation-delay: 1.5s; }
+
+    @keyframes pulse {
+      0%, 100% { 
+        border-color: rgba(168, 85, 247, 0.3);
+        background: rgba(168, 85, 247, 0.05);
+      }
+      50% { 
+        border-color: var(--purple-primary);
+        background: rgba(168, 85, 247, 0.2);
+        transform: scale(1.05);
+      }
+    }
+
+    /* Stats Section */
+    .stats {
+      max-width: 1400px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+
+    .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      margin-bottom: 80px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
     }
 
-    .feature-box {
-      background: #0a0a0a;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 32px;
-      transition: all 0.2s;
+    .stat-card {
+      background: var(--bg-card);
+      padding: 2.5rem;
+      border-radius: 20px;
+      border: 1px solid rgba(168, 85, 247, 0.1);
+      text-align: center;
+      transition: all 0.3s;
     }
 
-    .feature-box:hover {
-      border-color: #444;
-      background: #0f0f0f;
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--purple-primary);
+      background: linear-gradient(135deg, var(--bg-card), #252525);
     }
 
-    .feature-box h3 {
-      color: #9333ea;
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    /* Features Section */
+    .features {
+      max-width: 1400px;
+      margin: 8rem auto;
+      padding: 0 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .section-header h2 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
       font-size: 1.25rem;
-      margin-bottom: 12px;
-      font-weight: 600;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    .feature-box p {
-      color: #888;
-      font-size: 0.95rem;
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
     }
 
-    .guide {
-      background: #0a0a0a;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 48px;
-      margin-bottom: 80px;
+    .feature-card {
+      background: var(--bg-card);
+      padding: 2.5rem;
+      border-radius: 20px;
+      border: 1px solid rgba(168, 85, 247, 0.1);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .guide-title {
-      font-size: 1.75rem;
-      color: #fff;
-      margin-bottom: 40px;
-      font-weight: 600;
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--purple-primary), var(--purple-light));
+      transform: scaleX(0);
+      transition: transform 0.3s;
     }
 
-    .guide-step {
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--purple-primary);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+      border-radius: 16px;
       display: flex;
-      gap: 24px;
-      margin-bottom: 32px;
-      align-items: flex-start;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    /* How It Works */
+    .how-it-works {
+      max-width: 1200px;
+      margin: 8rem auto;
+      padding: 0 2rem;
+    }
+
+    .steps {
+      position: relative;
+      margin-top: 4rem;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 6rem;
+      align-items: center;
+    }
+
+    .step:nth-child(even) {
+      direction: rtl;
+    }
+
+    .step:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .step-content {
+      position: relative;
     }
 
     .step-number {
-      min-width: 40px;
-      height: 40px;
-      background: #9333ea;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #fff;
+      font-size: 6rem;
+      font-weight: 800;
+      color: rgba(168, 85, 247, 0.1);
+      position: absolute;
+      top: -2rem;
+      left: -1rem;
+      z-index: -1;
     }
 
-    .step-content h4 {
-      color: #fff;
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-      font-weight: 600;
+    .step-content h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
     }
 
     .step-content p {
-      color: #888;
-      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 1.1rem;
     }
 
-    .screenshot {
-      margin: 60px 0;
+    .step-visual {
+      background: linear-gradient(135deg, var(--bg-card), #252525);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      min-height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    /* Social Proof */
+    .social-proof {
+      max-width: 1400px;
+      margin: 8rem auto;
+      padding: 0 2rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+
+    .social-card {
+      background: var(--bg-card);
+      padding: 2rem 3rem;
+      border-radius: 16px;
+      border: 1px solid rgba(168, 85, 247, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.3s;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .social-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--purple-primary);
+      background: linear-gradient(135deg, var(--bg-card), #252525);
+    }
+
+    .social-icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      max-width: 1200px;
+      margin: 8rem auto 6rem;
+      padding: 0 2rem;
+    }
+
+    .cta-box {
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple-primary));
+      padding: 5rem 3rem;
+      border-radius: 30px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    .screenshot img {
-      max-width: 100%;
-      border-radius: 12px;
-      border: 1px solid #222;
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
     }
 
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .cta-box h2 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-box p {
+      font-size: 1.3rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-box .btn {
+      background: white;
+      color: var(--purple-dark);
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-box .btn:hover {
+      background: #f5f5f5;
+    }
+
+    /* Footer */
     footer {
+      border-top: 1px solid rgba(168, 85, 247, 0.1);
+      padding: 3rem 2rem;
       text-align: center;
-      padding: 40px 0;
-      color: #555;
-      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero-text h1 {
+        font-size: 3.5rem;
+      }
+
+      .step {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .step:nth-child(even) {
+        direction: ltr;
+      }
     }
 
     @media (max-width: 768px) {
-      h1 {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-text h1 {
         font-size: 2.5rem;
       }
 
-      .guide {
-        padding: 32px 24px;
+      .section-header h2 {
+        font-size: 2.5rem;
       }
 
-      .feature-grid {
+      .features-grid {
         grid-template-columns: 1fr;
+      }
+
+      .cta-box {
+        padding: 3rem 2rem;
+      }
+
+      .cta-box h2 {
+        font-size: 2rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>sClicker</h1>
-      <p class="tagline">A simple, fast auto clicker for Windows. Customize your click speed, create sequences, and boost your productivity.</p>
-      <a href="https://github.com/SNKgamesofficial/sClicker/releases/download/1.0/sClicker.exe" class="cta-button">Download for Windows</a>
+  <div class="bg-animation"></div>
+
+  <nav>
+    <div class="nav-container">
+      <div class="logo">sClicker</div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How it Works</a></li>
+        <li><a href="#download">Download</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>
+          The Fastest
+          <span class="highlight">Auto Clicker</span>
+          for Windows
+        </h1>
+        <p>
+          Maximize your productivity with precise click sequences. 
+          Easy to use, extremely powerful, and fully customizable.
+        </p>
+        <div class="hero-buttons">
+          <a href="https://github.com/SNKgamesofficial/sClicker/releases/download/1.0/sClicker.exe" class="btn btn-primary">
+            <span>⬇</span> Download Now
+          </a>
+          <a href="#how" class="btn btn-secondary">
+            Learn More
+          </a>
+        </div>
+      </div>
       
-      <div class="social-bar">
-        <a href="https://discord.gg/cqtD82te96" class="social-link">
-          <img src="https://cdn.simpleicons.org/discord/5865F2" alt="Discord">
-          <span>Discord</span>
-        </a>
-        <a href="mailto:snkgamesdevmode@gmail.com" class="social-link">
-          <img src="https://cdn.simpleicons.org/gmail/EA4335" alt="Email">
-          <span>Contact Us</span>
-        </a>
-        <a href="YOUR_TIKTOK_LINK" class="social-link">
-          <img src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok">
-          <span>TikTok</span>
-        </a>
-      </div>
-    </header>
-
-    <section class="features">
-      <h2 class="section-title">Features</h2>
-      <div class="feature-grid">
-        <div class="feature-box">
-          <h3>Speed Settings</h3>
-          <p>Adjust the delay between actions with a simple slider. Control your clicking speed from fastest to slower with millisecond precision.</p>
-        </div>
-        <div class="feature-box">
-          <h3>Action Sequence Builder</h3>
-          <p>Create custom click sequences with multiple actions. Add different click types, set coordinates, and build complex automation workflows.</p>
-        </div>
-        <div class="feature-box">
-          <h3>Control Panel</h3>
-          <p>Easy START/STOP control with F6 hotkey. Quick EXIT option with F7. Simple and intuitive interface for instant control.</p>
-        </div>
-        <div class="feature-box">
-          <h3>Repeat Mode</h3>
-          <p>Toggle ON/OFF for continuous clicking or single execution. Perfect for both gaming and productivity tasks.</p>
-        </div>
-        <div class="feature-box">
-          <h3>Theme Colors</h3>
-          <p>Customize your experience with multiple color themes: Purple, Blue, Green, and Red. Make sClicker look exactly how you want.</p>
-        </div>
-        <div class="feature-box">
-          <h3>Multi-Language Support</h3>
-          <p>Available in multiple languages including English and more. Easy language switching in settings.</p>
+      <div class="hero-visual">
+        <div class="click-demo">
+          <div class="demo-screen">
+            <div class="demo-control">
+              <span>Auto Clicking</span>
+              <div class="demo-toggle"></div>
+            </div>
+            <div class="demo-clicks">
+              <div class="click-indicator">👆</div>
+              <div class="click-indicator">👆</div>
+              <div class="click-indicator">👆</div>
+              <div class="click-indicator">👆</div>
+              <div class="click-indicator">👆</div>
+              <div class="click-indicator">👆</div>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="guide">
-      <h3 class="guide-title">Getting Started</h3>
-      
-      <div class="guide-step">
-        <div class="step-number">1</div>
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">1ms</div>
+        <div class="stat-label">Minimum Delay</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Click Sequences</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4</div>
+        <div class="stat-label">Color Themes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Free</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="section-header">
+      <h2>Powerful Features</h2>
+      <p>Everything you need to automate your clicks</p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Lightning Fast Speed</h3>
+        <p>Set the delay between actions precisely. From milliseconds to seconds - full control over your click speed.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Click Sequences</h3>
+        <p>Create complex workflows with multiple actions. Different click types, coordinates, and individual workflows.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎮</div>
+        <h3>Simple Control</h3>
+        <p>F6 to start, F7 to stop. Intuitive hotkeys for instant control - even while using other programs.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Repeat Mode</h3>
+        <p>Switch between continuous clicking and single execution. Perfect for gaming and productivity tasks.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>Custom Themes</h3>
+        <p>Choose between Purple, Blue, Green, and Red. Design sClicker exactly to your taste.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>Multi-Language</h3>
+        <p>Available in multiple languages. Easy language switching directly in the settings.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-it-works" id="how">
+    <div class="section-header">
+      <h2>Ready in 3 Steps</h2>
+      <p>Automation has never been this easy</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
         <div class="step-content">
-          <h4>Download and Install</h4>
-          <p>Download the latest version and run the installer. No complicated setup required.</p>
+          <div class="step-number">01</div>
+          <h3>Download & Install</h3>
+          <p>Download the latest version and start the program. No complicated installation, no hidden costs. Just download and get started.</p>
         </div>
+        <div class="step-visual">📥</div>
       </div>
 
-      <div class="guide-step">
-        <div class="step-number">2</div>
+      <div class="step">
         <div class="step-content">
-          <h4>Configure Your Settings</h4>
-          <p>Adjust the delay between clicks using the slider. Lower values mean faster clicking.</p>
+          <div class="step-number">02</div>
+          <h3>Customize Settings</h3>
+          <p>Adjust the delay with the slider. Choose your color theme and configure your hotkeys. Create click sequences to your liking.</p>
         </div>
+        <div class="step-visual">⚙️</div>
       </div>
 
-      <div class="guide-step">
-        <div class="step-number">3</div>
+      <div class="step">
         <div class="step-content">
-          <h4>Start Clicking</h4>
-          <p>Press F6 to start auto clicking and F7 to stop. You can change these hotkeys in settings.</p>
+          <div class="step-number">03</div>
+          <h3>Start & Be Productive</h3>
+          <p>Press F6 to start and F7 to stop. That's it! You can now use your time for more important things.</p>
         </div>
+        <div class="step-visual">🚀</div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <footer>
-      <p>&copy; 2026 sClicker. All rights reserved.</p>
-    </footer>
-  </div>
+  <section class="social-proof">
+    <div class="section-header">
+      <h2>Join the Community</h2>
+      <p>Become part of our growing community</p>
+    </div>
+
+    <div class="social-links">
+      <a href="https://discord.gg/cqtD82te96" class="social-card">
+        <img src="https://cdn.simpleicons.org/discord/5865F2" alt="Discord" class="social-icon">
+        <span>Discord Server</span>
+      </a>
+      <a href="mailto:snkgamesdevmode@gmail.com" class="social-card">
+        <img src="https://cdn.simpleicons.org/gmail/EA4335" alt="Email" class="social-icon">
+        <span>Contact Us</span>
+      </a>
+      <a href="YOUR_TIKTOK_LINK" class="social-card">
+        <img src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok" class="social-icon">
+        <span>Follow on TikTok</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="cta-section" id="download">
+    <div class="cta-box">
+      <h2>Ready to get started?</h2>
+      <p>Download sClicker now for free and experience the future of click automation</p>
+      <a href="https://github.com/SNKgamesofficial/sClicker/releases/download/1.0/sClicker.exe" class="btn">
+        <span>⬇</span> Free Download for Windows
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 sClicker. Built with 💜 for the community.</p>
+  </footer>
 </body>
 </html>
