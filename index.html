@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sClicker - The best Autoclicker for Wondows</title>
+  <title>sClicker - The best Autoclicker for Windows</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     
@@ -24,7 +24,7 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'gg sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: var(--bg-dark);
       color: var(--text-primary);
       overflow-x: hidden;
@@ -146,9 +146,9 @@
     }
 
     .hero-text h1 {
-      font-size: 5rem;
+      font-size: 6.5rem;
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.05;
       margin-bottom: 1.5rem;
       background: linear-gradient(135deg, #ffffff 0%, var(--purple-light) 100%);
       -webkit-background-clip: text;
@@ -160,10 +160,11 @@
       display: block;
       color: var(--purple-primary);
       -webkit-text-fill-color: var(--purple-primary);
+      filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 16px rgba(168, 85, 247, 0.6));
     }
 
     .hero-text p {
-      font-size: 1.25rem;
+      font-size: 1.5rem;
       color: var(--text-secondary);
       margin-bottom: 2.5rem;
       line-height: 1.7;
@@ -176,10 +177,10 @@
     }
 
     .btn {
-      padding: 1rem 2.5rem;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 1.05rem;
+      padding: 1.2rem 3rem;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 1.15rem;
       text-decoration: none;
       transition: all 0.3s;
       border: none;
@@ -190,9 +191,9 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+      background: linear-gradient(90deg, #a855f7 0%, #c084fc 25%, #d946ef 75%, #e879f9 100%);
       color: white;
-      box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(217, 70, 239, 0.3);
       position: relative;
       overflow: hidden;
     }
@@ -214,7 +215,7 @@
 
     .btn-primary:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(168, 85, 247, 0.5);
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.8), 0 0 60px rgba(217, 70, 239, 0.6);
     }
 
     .btn-primary::after {
@@ -231,12 +232,18 @@
     .btn-secondary {
       background: transparent;
       color: var(--text-primary);
-      border: 2px solid var(--purple-primary);
+      border: 2.5px solid var(--purple-primary);
     }
 
     .btn-secondary:hover {
       background: rgba(168, 85, 247, 0.1);
       transform: translateY(-3px);
+    }
+
+    .warning-text {
+      color: var(--text-secondary);
+      margin-top: 1rem;
+      font-size: 0.95rem;
     }
 
     /* Modal Styles */
@@ -410,20 +417,20 @@
       margin-top: 1rem;
       background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
       color: white;
-      border: none;
+      border: 2px solid #ffffff;
       border-radius: 12px;
       font-weight: 600;
       font-size: 1.05rem;
       cursor: pointer;
       transition: all 0.3s;
-      box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3);
       position: relative;
       overflow: hidden;
     }
 
     #downloadButton:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(168, 85, 247, 0.5);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.5);
     }
 
     #downloadButton:disabled {
@@ -617,13 +624,13 @@
     }
 
     .section-header h2 {
-      font-size: 3.5rem;
+      font-size: 4.5rem;
       font-weight: 800;
       margin-bottom: 1rem;
     }
 
     .section-header p {
-      font-size: 1.25rem;
+      font-size: 1.4rem;
       color: var(--text-secondary);
       max-width: 600px;
       margin: 0 auto;
@@ -679,15 +686,15 @@
     }
 
     .feature-card h3 {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       margin-bottom: 1rem;
       font-weight: 700;
     }
 
     .feature-card p {
       color: var(--text-secondary);
-      line-height: 1.7;
-      font-size: 1.05rem;
+      line-height: 1.8;
+      font-size: 1.15rem;
     }
 
     /* How It Works */
@@ -733,15 +740,15 @@
     }
 
     .step-content h3 {
-      font-size: 2rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
       font-weight: 700;
     }
 
     .step-content p {
       color: var(--text-secondary);
-      line-height: 1.8;
-      font-size: 1.1rem;
+      line-height: 1.9;
+      font-size: 1.2rem;
     }
 
     .step-visual {
@@ -840,7 +847,7 @@
     }
 
     .cta-box h2 {
-      font-size: 3rem;
+      font-size: 4rem;
       font-weight: 800;
       margin-bottom: 1.5rem;
       position: relative;
@@ -848,7 +855,7 @@
     }
 
     .cta-box p {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       margin-bottom: 2.5rem;
       opacity: 0.9;
       position: relative;
@@ -1011,7 +1018,7 @@
         <label for="termsCheckbox">I understand and accept all terms and conditions</label>
       </div>
 
-      <button id="downloadButton" onclick="startDownload()" class="modal-button" disabled>
+      <button id="downloadButton" onclick="startDownload()" disabled>
         I Accept - Download sClicker
       </button>
     </div>
@@ -1106,14 +1113,15 @@
         <div class="hero-buttons">
           <button onclick="openTermsModal()" class="btn btn-primary">
             Download for Windows
+               (Version 1.0)
           </button>
-          <a href="#how" class="btn btn-secondary">
-            Learn More
-          </a>
           <button onclick="openWarningModal()" class="btn btn-secondary">
             Why the Warning?
           </button>
         </div>
+        <p class="warning-text">
+          ⚠️ Please inform yourself and read the text before installing!
+        </p>
       </div>
       
       <div class="hero-visual">
@@ -1271,7 +1279,7 @@
     <div class="cta-box">
       <h2>Ready to get started?</h2>
       <p>Download sClicker now for free and experience the future of click automation</p>
-      <button onclick="openTermsModal()" class="btn">
+      <button onclick="openTermsModal()" class="btn btn-primary">
         Free Download for Windows
       </button>
     </div>
@@ -1282,6 +1290,10 @@
   </footer>
 
   <script>
+    let downloadCountdown = 0;
+    let countdownInterval = null;
+    let timerFinished = false;
+
     function openWarningModal() {
       document.getElementById("warningModal").style.display = "block";
     }
@@ -1293,11 +1305,16 @@
     function openTermsModal() {
       document.getElementById("termsModal").style.display = "block";
       document.getElementById("termsCheckbox").checked = false;
+      timerFinished = false;
       updateDownloadButton();
+      startTimerOnModalOpen();
     }
 
     function closeTermsModal() {
       document.getElementById("termsModal").style.display = "none";
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+      }
     }
 
     function openWarningModalFromTerms() {
@@ -1308,12 +1325,44 @@
     function updateDownloadButton() {
       const checkbox = document.getElementById("termsCheckbox");
       const button = document.getElementById("downloadButton");
-      button.disabled = !checkbox.checked;
+      
+      if (!timerFinished) {
+        button.disabled = true;
+      } else {
+        button.disabled = !checkbox.checked;
+      }
+    }
+
+    function startTimerOnModalOpen() {
+      const button = document.getElementById("downloadButton");
+      downloadCountdown = 10;
+      button.disabled = true;
+      
+      updateCountdownDisplay();
+      
+      countdownInterval = setInterval(() => {
+        downloadCountdown--;
+        updateCountdownDisplay();
+        
+        if (downloadCountdown <= 0) {
+          clearInterval(countdownInterval);
+          timerFinished = true;
+          updateDownloadButton();
+          button.textContent = "I Accept - Download sClicker";
+        }
+      }, 1000);
+    }
+
+    function updateCountdownDisplay() {
+      const button = document.getElementById("downloadButton");
+      button.textContent = `I Accept - Download sClicker (${downloadCountdown}s)`;
     }
 
     function startDownload() {
-      window.location.href = "https://github.com/SNKgamesofficial/sClicker/releases/download/1.0/sClicker.exe";
-      closeTermsModal();
+      if (timerFinished && document.getElementById("termsCheckbox").checked) {
+        window.location.href = "https://github.com/SNKgamesofficial/sClicker/releases/download/1.0/sClicker.exe";
+        closeTermsModal();
+      }
     }
 
     // Close modal when clicking outside of it
