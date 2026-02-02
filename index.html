@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sClicker - The Ultimate Auto Clicker</title>
+  <title>sClicker - The best Autoclicker for Wondows</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     
@@ -193,11 +193,39 @@
       background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
       color: white;
       box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
     }
 
     .btn-primary:hover {
       transform: translateY(-3px);
       box-shadow: 0 12px 30px rgba(168, 85, 247, 0.5);
+    }
+
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 50%);
+      pointer-events: none;
     }
 
     .btn-secondary {
@@ -209,6 +237,214 @@
     .btn-secondary:hover {
       background: rgba(168, 85, 247, 0.1);
       transform: translateY(-3px);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, var(--bg-card), #252525);
+      margin: 5% auto;
+      padding: 2.5rem;
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      border-radius: 24px;
+      width: 90%;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .close-modal {
+      color: var(--text-secondary);
+      float: right;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
+      line-height: 1;
+    }
+
+    .close-modal:hover {
+      color: var(--text-primary);
+    }
+
+    .modal h2 {
+      font-size: 2.5rem;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .modal-section {
+      margin-bottom: 2rem;
+    }
+
+    .modal-section h3 {
+      font-size: 1.3rem;
+      color: var(--purple-light);
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    .modal-section p {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .warning-box {
+      background: rgba(168, 85, 247, 0.1);
+      border-left: 4px solid var(--purple-primary);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+    }
+
+    .warning-box strong {
+      color: var(--purple-light);
+    }
+
+    .more-info-button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.7rem 1.5rem;
+      background: rgba(168, 85, 247, 0.2);
+      color: var(--purple-light);
+      border: 1px solid var(--purple-light);
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .more-info-button:hover {
+      background: rgba(168, 85, 247, 0.4);
+      transform: translateX(5px);
+    }
+
+    .modal-button {
+      width: 100%;
+      padding: 1.2rem 2rem;
+      margin-top: 2rem;
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
+    }
+
+    .modal-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(168, 85, 247, 0.5);
+    }
+
+    .modal-button:active {
+      transform: translateY(0px);
+    }
+
+    .terms-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: rgba(168, 85, 247, 0.05);
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      border-radius: 12px;
+    }
+
+    .terms-checkbox input[type="checkbox"] {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      accent-color: var(--purple-primary);
+      flex-shrink: 0;
+    }
+
+    .terms-checkbox label {
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin: 0;
+    }
+
+    #downloadButton {
+      width: 100%;
+      padding: 1.2rem 2rem;
+      margin-top: 1rem;
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #downloadButton:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(168, 85, 247, 0.5);
+    }
+
+    #downloadButton:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    #downloadButton:not(:disabled)::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    }
+
+    #downloadButton:not(:disabled):hover::before {
+      left: 100%;
+      transition: left 0.5s;
     }
 
     /* Hero Visual */
@@ -291,31 +527,36 @@
 
     .click-indicator {
       aspect-ratio: 1;
-      background: rgba(168, 85, 247, 0.05);
-      border: 2px solid rgba(168, 85, 247, 0.3);
+      background: linear-gradient(135deg, #2a2a3a, #1a1a2a);
+      border: 2px solid var(--purple-primary);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
-      animation: pulse 2s ease-in-out infinite;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--purple-light);
+      animation: keyPress 1.2s ease-in-out infinite;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
+    .click-indicator:nth-child(1) { animation-delay: 0s; }
     .click-indicator:nth-child(2) { animation-delay: 0.3s; }
     .click-indicator:nth-child(3) { animation-delay: 0.6s; }
     .click-indicator:nth-child(4) { animation-delay: 0.9s; }
     .click-indicator:nth-child(5) { animation-delay: 1.2s; }
     .click-indicator:nth-child(6) { animation-delay: 1.5s; }
 
-    @keyframes pulse {
-      0%, 100% { 
-        border-color: rgba(168, 85, 247, 0.3);
-        background: rgba(168, 85, 247, 0.05);
+    @keyframes keyPress {
+      0%, 90%, 100% { 
+        transform: translateY(0px);
+        background: linear-gradient(135deg, #2a2a3a, #1a1a2a);
       }
       50% { 
-        border-color: var(--purple-primary);
-        background: rgba(168, 85, 247, 0.2);
-        transform: scale(1.05);
+        transform: translateY(8px);
+        background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
       }
     }
 
@@ -515,6 +756,16 @@
       font-size: 4rem;
     }
 
+    .step-icon {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--purple-light);
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+      padding: 1.5rem 2.5rem;
+      border-radius: 12px;
+      letter-spacing: 2px;
+    }
+
     /* Social Proof */
     .social-proof {
       max-width: 1400px;
@@ -668,11 +919,160 @@
       .cta-box h2 {
         font-size: 2rem;
       }
+
+      .modal-content {
+        width: 95%;
+        margin: 20% auto;
+        padding: 1.5rem;
+      }
+
+      .modal h2 {
+        font-size: 1.8rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="bg-animation"></div>
+
+  <!-- Terms Modal -->
+  <div id="termsModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeTermsModal()">&times;</span>
+      
+      <h2>Download Agreement & Legal Notice</h2>
+      
+      <div class="modal-section">
+        <h3>About sClicker</h3>
+        <p>
+          sClicker is a modern, free autoclicker application for Windows. It allows you to automate repetitive clicking tasks with customizable speed settings and action sequences. By downloading and using this software, you acknowledge that you have read and understood this agreement.
+        </p>
+      </div>
+
+      <div class="warning-box">
+        <strong>Important: Windows Defender SmartScreen Warning</strong>
+        <p style="margin-top: 0.8rem;">
+          When you download and run sClicker, Windows may display a security warning. This is completely normal for new applications.
+        </p>
+        <button onclick="openWarningModalFromTerms()" class="more-info-button">
+          More on this topic →
+        </button>
+      </div>
+
+      <div class="modal-section">
+        <h3>Terms of Use</h3>
+        <p>
+          You agree to use sClicker only for lawful and ethical purposes. sClicker is designed for legitimate productivity automation tasks such as automating repetitive work processes, data entry, and similar activities. You understand that misuse of autoclicker tools is prohibited, including but not limited to using it for:
+        </p>
+        <ul style="margin-top: 0.8rem; margin-left: 1rem; color: var(--text-secondary);">
+          <li>Cheating in online games or gaming platforms</li>
+          <li>Unauthorized access to systems or accounts</li>
+          <li>Bypassing security measures or anti-cheat systems</li>
+          <li>Any illegal or harmful activities</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <h3>Disclaimer</h3>
+        <p>
+          sClicker is provided "as-is" without warranty of any kind. The developers are not responsible for any damage, data loss, system issues, account bans, or any other consequences caused by the use or misuse of this software. Users assume full responsibility for how they use sClicker. Use at your own risk.
+        </p>
+      </div>
+
+      <div class="modal-section">
+        <h3>License & Copyright</h3>
+        <p>
+          sClicker is released under an open-source license. The source code is available on GitHub for transparency and community verification. You are free to use, modify, and distribute sClicker in accordance with the open-source license terms. Copyright © 2026 SNKgames.
+        </p>
+      </div>
+
+      <div class="modal-section">
+        <h3>User Responsibility</h3>
+        <p>
+          By using sClicker, you agree that:
+        </p>
+        <ul style="margin-top: 0.8rem; margin-left: 1rem; color: var(--text-secondary);">
+          <li>You will use sClicker in compliance with all applicable laws and regulations</li>
+          <li>You will not use sClicker to violate terms of service of any third-party applications</li>
+          <li>You understand the risks of using automation tools</li>
+          <li>You accept full responsibility for any consequences of using sClicker</li>
+          <li>The developers are not liable for account suspensions, bans, or any damages</li>
+        </ul>
+      </div>
+
+      <div class="terms-checkbox">
+        <input type="checkbox" id="termsCheckbox" onchange="updateDownloadButton()">
+        <label for="termsCheckbox">I understand and accept all terms and conditions</label>
+      </div>
+
+      <button id="downloadButton" onclick="startDownload()" class="modal-button" disabled>
+        I Accept - Download sClicker
+      </button>
+    </div>
+  </div>
+
+  <!-- Warning Modal -->
+  <div id="warningModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeWarningModal()">&times;</span>
+      
+      <h2>Why Does Windows Show a Warning?</h2>
+      
+      <div class="modal-section">
+        <h3>It's Not Because There's a Virus</h3>
+        <p>
+          sClicker is 100% safe and virus-free. The Windows SmartScreen warning appears simply because sClicker is a new application that Microsoft hasn't widely recognized yet. This is completely normal for small, independent software projects.
+        </p>
+      </div>
+
+      <div class="warning-box">
+        <strong>Why you can trust sClicker:</strong>
+        <ul style="margin-top: 0.5rem; margin-left: 1rem; color: var(--text-secondary);">
+          <li>Source code is available on GitHub for transparency</li>
+          <li>No internet connections - works completely offline</li>
+          <li>No data collection or telemetry</li>
+          <li>Open source and community-driven</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <h3>Why Does SmartScreen Show This Warning?</h3>
+        <p>
+          Microsoft SmartScreen checks applications against their database. When an app is new or hasn't been downloaded by millions of users yet, Windows displays a caution message as a security measure. This happens to many legitimate applications.
+        </p>
+        <p style="margin-top: 1rem;">
+          It's like a safety feature - Windows doesn't know the app yet, so it warns you. But that doesn't mean it's dangerous!
+        </p>
+      </div>
+
+      <div class="modal-section">
+        <h3>How to Safely Install sClicker</h3>
+        <p>
+          When you see the warning:
+        </p>
+        <ol style="margin-top: 0.8rem; margin-left: 1rem; color: var(--text-secondary);">
+          <li>Click "More info" on the SmartScreen dialog</li>
+          <li>Click "Run anyway" to proceed</li>
+          <li>That's it! sClicker is now installed and ready to use</li>
+        </ol>
+      </div>
+
+      <div class="warning-box">
+        <strong>Fun Fact:</strong> Many popular applications from small developers show similar warnings when they're first released. This doesn't indicate any problem - it just means the application is new to Windows' database.
+      </div>
+
+      <div class="modal-section">
+        <h3>Your Security is Our Priority</h3>
+        <p>
+          We respect your privacy and security completely. sClicker requires no personal information, doesn't access your files without permission, and has no hidden features or malicious code. You can verify this by checking our open source repository on GitHub.
+        </p>
+      </div>
+
+      <button onclick="closeWarningModal()" class="modal-button">
+        I understand
+      </button>
+    </div>
+  </div>
 
   <nav>
     <div class="nav-container">
@@ -698,12 +1098,15 @@
           Easy to use, extremely powerful, and fully customizable.
         </p>
         <div class="hero-buttons">
-          <a href="https://github.com/SNKgamesofficial/sClicker/releases/download/1.0/sClicker.exe" class="btn btn-primary">
-            <span>⬇</span> Download Now
-          </a>
+          <button onclick="openTermsModal()" class="btn btn-primary">
+            Download for Windows
+          </button>
           <a href="#how" class="btn btn-secondary">
             Learn More
           </a>
+          <button onclick="openWarningModal()" class="btn btn-secondary">
+            Why the Warning?
+          </button>
         </div>
       </div>
       
@@ -715,12 +1118,12 @@
               <div class="demo-toggle"></div>
             </div>
             <div class="demo-clicks">
-              <div class="click-indicator">👆</div>
-              <div class="click-indicator">👆</div>
-              <div class="click-indicator">👆</div>
-              <div class="click-indicator">👆</div>
-              <div class="click-indicator">👆</div>
-              <div class="click-indicator">👆</div>
+              <div class="click-indicator">W</div>
+              <div class="click-indicator">A</div>
+              <div class="click-indicator">S</div>
+              <div class="click-indicator">D</div>
+              <div class="click-indicator">L</div>
+              <div class="click-indicator">X</div>
             </div>
           </div>
         </div>
@@ -769,7 +1172,7 @@
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">🎮</div>
+        <div class="feature-icon">⚙️</div>
         <h3>Simple Control</h3>
         <p>F6 to start, F7 to stop. Intuitive hotkeys for instant control - even while using other programs.</p>
       </div>
@@ -807,7 +1210,9 @@
           <h3>Download & Install</h3>
           <p>Download the latest version and start the program. No complicated installation, no hidden costs. Just download and get started.</p>
         </div>
-        <div class="step-visual">📥</div>
+        <div class="step-visual">
+          <div class="step-icon">DOWNLOAD</div>
+        </div>
       </div>
 
       <div class="step">
@@ -816,7 +1221,9 @@
           <h3>Customize Settings</h3>
           <p>Adjust the delay with the slider. Choose your color theme and configure your hotkeys. Create click sequences to your liking.</p>
         </div>
-        <div class="step-visual">⚙️</div>
+        <div class="step-visual">
+          <div class="step-icon">SETTINGS</div>
+        </div>
       </div>
 
       <div class="step">
@@ -825,7 +1232,9 @@
           <h3>Start & Be Productive</h3>
           <p>Press F6 to start and F7 to stop. That's it! You can now use your time for more important things.</p>
         </div>
-        <div class="step-visual">🚀</div>
+        <div class="step-visual">
+          <div class="step-icon">START</div>
+        </div>
       </div>
     </div>
   </section>
@@ -856,14 +1265,62 @@
     <div class="cta-box">
       <h2>Ready to get started?</h2>
       <p>Download sClicker now for free and experience the future of click automation</p>
-      <a href="https://github.com/SNKgamesofficial/sClicker/releases/download/1.0/sClicker.exe" class="btn">
-        <span>⬇</span> Free Download for Windows
-      </a>
+      <button onclick="openTermsModal()" class="btn">
+        Free Download for Windows
+      </button>
     </div>
   </section>
 
   <footer>
-    <p>&copy; 2026 sClicker. Built with 💜 for the community.</p>
+    <p>&copy; 2026 SNKgames. Built with passion for the community.</p>
   </footer>
+
+  <script>
+    function openWarningModal() {
+      document.getElementById("warningModal").style.display = "block";
+    }
+
+    function closeWarningModal() {
+      document.getElementById("warningModal").style.display = "none";
+    }
+
+    function openTermsModal() {
+      document.getElementById("termsModal").style.display = "block";
+      document.getElementById("termsCheckbox").checked = false;
+      updateDownloadButton();
+    }
+
+    function closeTermsModal() {
+      document.getElementById("termsModal").style.display = "none";
+    }
+
+    function openWarningModalFromTerms() {
+      closeTermsModal();
+      openWarningModal();
+    }
+
+    function updateDownloadButton() {
+      const checkbox = document.getElementById("termsCheckbox");
+      const button = document.getElementById("downloadButton");
+      button.disabled = !checkbox.checked;
+    }
+
+    function startDownload() {
+      window.location.href = "https://github.com/SNKgamesofficial/sClicker/releases/download/1.0/sClicker.exe";
+      closeTermsModal();
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+      const warningModal = document.getElementById("warningModal");
+      const termsModal = document.getElementById("termsModal");
+      if (event.target == warningModal) {
+        warningModal.style.display = "none";
+      }
+      if (event.target == termsModal) {
+        termsModal.style.display = "none";
+      }
+    }
+  </script>
 </body>
 </html>
