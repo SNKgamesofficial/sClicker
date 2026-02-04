@@ -899,8 +899,19 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
       animation: rotate 20s linear infinite;
+    }
+
+    .rating-box::after {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -30%;
+      width: 150%;
+      height: 150%;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+      animation: rotate 15s linear infinite reverse;
     }
 
     .rating-box h2 {
@@ -1465,8 +1476,15 @@
         <span class="star" data-rating="10">★</span>
       </div>
 
-      <form class="rating-form" id="ratingForm">
+      <form class="rating-form" id="ratingForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="cfcb5156-8b98-407c-83d6-f9b135423206">
+        <input type="hidden" name="subject" id="emailSubject" value="sClicker Rating">
+        <input type="hidden" name="from_name" value="sClicker Website">
+        <input type="hidden" name="to_email" value="snkgamesdevmode@gmail.com">
+        <input type="hidden" name="rating" id="ratingValue" value="">
+        
         <textarea 
+          name="message"
           id="feedbackMessage" 
           placeholder="Tell us what you think about sClicker... (optional)"
           maxlength="1000"
@@ -1530,7 +1548,7 @@
       highlightStars(selectedRating);
     }
 
-    ratingForm.addEventListener('submit', function(e) {
+    ratingForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       
       if (selectedRating === 0) {
@@ -1541,36 +1559,40 @@
       submitRating.disabled = true;
       submitRating.textContent = 'Sending...';
 
-      const feedback = feedbackMessage.value.trim();
-      const emailSubject = `sClicker Rating: ${selectedRating}/10 Stars`;
-      const emailBody = `Rating: ${selectedRating}/10 Stars
+      // Update hidden fields
+      document.getElementById('ratingValue').value = `${selectedRating}/10 Stars`;
+      document.getElementById('emailSubject').value = `sClicker Rating: ${selectedRating}/10 Stars`;
 
-${feedback ? `Feedback Message:
-${feedback}` : 'No additional feedback provided.'}
-
----
-Submitted: ${new Date().toLocaleString()}`;
-
-      // Create mailto link
-      const mailtoLink = `mailto:snkgamesdevmode@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-      
-      // Open email client
-      window.location.href = mailtoLink;
-
-      // Show success message
-      setTimeout(() => {
-        showMessage('Thank you for your feedback! Your email client should open now.', 'success');
-        submitRating.textContent = 'Submit Rating';
+      try {
+        const formData = new FormData(ratingForm);
         
-        // Reset form after 3 seconds
-        setTimeout(() => {
-          selectedRating = 0;
-          updateStars();
-          feedbackMessage.value = '';
-          submitRating.disabled = true;
-          ratingMessage.style.display = 'none';
-        }, 3000);
-      }, 500);
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showMessage('Thank you for your feedback! Your rating has been submitted successfully. ⭐', 'success');
+          
+          // Reset form after 3 seconds
+          setTimeout(() => {
+            selectedRating = 0;
+            updateStars();
+            document.getElementById('feedbackMessage').value = '';
+            submitRating.disabled = true;
+            submitRating.textContent = 'Submit Rating';
+            ratingMessage.style.display = 'none';
+          }, 3000);
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (error) {
+        showMessage('Sorry, there was an error. Please try emailing us directly at snkgamesdevmode@gmail.com', 'error');
+        submitRating.disabled = false;
+        submitRating.textContent = 'Submit Rating';
+      }
     });
 
     function showMessage(message, type) {
