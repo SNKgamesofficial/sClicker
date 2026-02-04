@@ -963,6 +963,30 @@
       z-index: 1;
     }
 
+    .rating-form input[type="email"] {
+      width: 100%;
+      padding: 1.2rem;
+      border-radius: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.95);
+      color: #0d0d0d;
+      font-size: 1.1rem;
+      font-family: inherit;
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+    }
+
+    .rating-form input[type="email"]:focus {
+      outline: none;
+      border-color: #ffffff;
+      background: white;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+
+    .rating-form input[type="email"]::placeholder {
+      color: rgba(13, 13, 13, 0.5);
+    }
+
     .rating-form textarea {
       width: 100%;
       padding: 1.5rem;
@@ -1479,9 +1503,17 @@
       <form class="rating-form" id="ratingForm" action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="access_key" value="cfcb5156-8b98-407c-83d6-f9b135423206">
         <input type="hidden" name="subject" id="emailSubject" value="sClicker Rating">
-        <input type="hidden" name="from_name" value="sClicker Website">
-        <input type="hidden" name="to_email" value="snkgamesdevmode@gmail.com">
+        <input type="hidden" name="from_name" value="sClicker User">
+        <input type="hidden" name="redirect" value="false">
         <input type="hidden" name="rating" id="ratingValue" value="">
+        
+        <input 
+          type="email"
+          name="email"
+          id="userEmail" 
+          placeholder="Your email (optional - only if you want a response)"
+          style="width: 100%; padding: 1.2rem; border-radius: 16px; border: 2px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.95); color: #0d0d0d; font-size: 1.1rem; font-family: inherit; margin-bottom: 1rem; transition: all 0.3s;"
+        />
         
         <textarea 
           name="message"
@@ -1566,12 +1598,17 @@
       try {
         const formData = new FormData(ratingForm);
         
+        // Add redirect to false to get JSON response
+        formData.append('redirect', 'false');
+        
         const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           body: formData
         });
 
         const data = await response.json();
+        
+        console.log('Response:', data); // Debug log
 
         if (data.success) {
           showMessage('Thank you for your feedback! Your rating has been submitted successfully. ⭐', 'success');
@@ -1586,10 +1623,11 @@
             ratingMessage.style.display = 'none';
           }, 3000);
         } else {
-          throw new Error('Submission failed');
+          throw new Error(data.message || 'Submission failed');
         }
       } catch (error) {
-        showMessage('Sorry, there was an error. Please try emailing us directly at snkgamesdevmode@gmail.com', 'error');
+        console.error('Error:', error); // Debug log
+        showMessage('Error: ' + error.message + '. Please try emailing us directly at snkgamesdevmode@gmail.com', 'error');
         submitRating.disabled = false;
         submitRating.textContent = 'Submit Rating';
       }
