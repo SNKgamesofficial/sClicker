@@ -6,23 +6,63 @@
   <title>sClicker - The best Autoclicker for Windows</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-    @font-face { font-family: 'gg sans'; src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Normal.woff2') format('woff2'); font-weight: 400; }
-    @font-face { font-family: 'gg sans'; src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Medium.woff2') format('woff2'); font-weight: 500; }
-    @font-face { font-family: 'gg sans'; src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Semibold.woff2') format('woff2'); font-weight: 600; }
-    @font-face { font-family: 'gg sans'; src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Bold.woff2') format('woff2'); font-weight: 700; }
-    @font-face { font-family: 'gg sans'; src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Extrabold.woff2') format('woff2'); font-weight: 800; }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --purple-primary: #a855f7; --purple-dark: #7e22ce; --purple-light: #c084fc;
-      --bg-dark: #0d0d0d; --bg-card: #1a1a1a; --text-primary: #ffffff; --text-secondary: #a3a3a3;
-      --gold-primary: #f59e0b; --gold-dark: #d97706; --gold-light: #fbbf24;
+
+    @font-face {
+      font-family: 'gg sans';
+      src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Normal.woff2') format('woff2');
+      font-weight: 400;
     }
-    body { font-family: 'gg sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg-dark); color: var(--text-primary); overflow-x: hidden; }
+    @font-face {
+      font-family: 'gg sans';
+      src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Medium.woff2') format('woff2');
+      font-weight: 500;
+    }
+    @font-face {
+      font-family: 'gg sans';
+      src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Semibold.woff2') format('woff2');
+      font-weight: 600;
+    }
+    @font-face {
+      font-family: 'gg sans';
+      src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Bold.woff2') format('woff2');
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: 'gg sans';
+      src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Extrabold.woff2') format('woff2');
+      font-weight: 800;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --purple-primary: #a855f7;
+      --purple-dark: #7e22ce;
+      --purple-light: #c084fc;
+      --bg-dark: #0d0d0d;
+      --bg-card: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #a3a3a3;
+      --gold-primary: #f59e0b;
+      --gold-dark: #d97706;
+      --green-accent: #22c55e;
+    }
+
+    body {
+      font-family: 'gg sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* Background */
     .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.15; }
     .bg-animation::before { content: ''; position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, var(--purple-primary) 0%, transparent 70%); top: -250px; right: -200px; animation: float 20s ease-in-out infinite; }
     .bg-animation::after { content: ''; position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, var(--purple-dark) 0%, transparent 70%); bottom: -150px; left: -150px; animation: float 15s ease-in-out infinite reverse; }
-    @keyframes float { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(50px, 50px) scale(1.1); } }
-    nav { padding: 2rem 0; position: sticky; top: 0; background: rgba(13, 13, 13, 0.8); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid rgba(168, 85, 247, 0.1); }
+    @keyframes float { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(50px,50px) scale(1.1); } }
+
+    /* Nav */
+    nav { padding: 2rem 0; position: sticky; top: 0; background: rgba(13,13,13,0.85); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid rgba(168,85,247,0.1); }
     .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
     .logo { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, var(--purple-primary), var(--purple-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
@@ -30,99 +70,119 @@
     .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--purple-primary); transition: width 0.3s; }
     .nav-links a:hover { color: var(--text-primary); }
     .nav-links a:hover::after { width: 100%; }
-    .hero { max-width: 1400px; margin: 0 auto; padding: 8rem 2rem 6rem; position: relative; }
+
+    /* Hero */
+    .hero { max-width: 1400px; margin: 0 auto; padding: 8rem 2rem 6rem; }
     .hero-content { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; }
     .hero-text h1 { font-size: 6.5rem; font-weight: 800; line-height: 1.05; margin-bottom: 1.5rem; background: linear-gradient(135deg, #ffffff 0%, var(--purple-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-text .highlight { display: block; color: var(--purple-primary); -webkit-text-fill-color: var(--purple-primary); filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 16px rgba(168, 85, 247, 0.6)); }
+    .hero-text .highlight { display: block; color: var(--purple-primary); -webkit-text-fill-color: var(--purple-primary); filter: drop-shadow(0 0 8px rgba(168,85,247,0.8)) drop-shadow(0 0 16px rgba(168,85,247,0.6)); }
     .hero-text p { font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 2.5rem; line-height: 1.7; }
     .hero-buttons { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-    .btn { padding: 1.2rem 3rem; border-radius: 16px; font-weight: 700; font-size: 1.15rem; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; }
-    .btn-primary { background: linear-gradient(90deg, #a855f7 0%, #c084fc 25%, #d946ef 75%, #e879f9 100%); color: white; box-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(217, 70, 239, 0.3); position: relative; overflow: hidden; }
-    .btn-primary::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent); transition: left 0.5s; }
-    .btn-primary:hover::before { left: 100%; }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(168, 85, 247, 0.8), 0 0 60px rgba(217, 70, 239, 0.6); }
-    .btn-primary::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 50%); pointer-events: none; }
-    .btn-secondary { background: transparent; color: var(--text-primary); border: 2.5px solid var(--purple-primary); }
-    .btn-secondary:hover { background: rgba(168, 85, 247, 0.1); transform: translateY(-3px); }
     .warning-text { color: var(--text-secondary); margin-top: 1rem; font-size: 0.95rem; }
-    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); animation: fadeIn 0.3s; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    .modal-content { background: linear-gradient(135deg, var(--bg-card), #252525); margin: 5% auto; padding: 2.5rem; border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 24px; width: 90%; max-width: 700px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8); animation: slideIn 0.3s ease-out; }
-    @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .close-modal { color: var(--text-secondary); float: right; font-size: 2rem; font-weight: bold; cursor: pointer; transition: color 0.3s; line-height: 1; }
-    .close-modal:hover { color: var(--text-primary); }
-    .modal h2 { font-size: 2.5rem; margin-top: 1rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--purple-primary), var(--purple-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .modal-section { margin-bottom: 2rem; }
-    .modal-section h3 { font-size: 1.3rem; color: var(--purple-light); margin-bottom: 0.8rem; font-weight: 700; }
-    .modal-section p { color: var(--text-secondary); line-height: 1.8; font-size: 1rem; }
-    .warning-box { background: rgba(168, 85, 247, 0.1); border-left: 4px solid var(--purple-primary); padding: 1.5rem; margin: 1.5rem 0; border-radius: 8px; }
-    .warning-box strong { color: var(--purple-light); }
-    .more-info-button { display: inline-block; margin-top: 1rem; padding: 0.7rem 1.5rem; background: rgba(168, 85, 247, 0.2); color: var(--purple-light); border: 1px solid var(--purple-light); border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.95rem; }
-    .more-info-button:hover { background: rgba(168, 85, 247, 0.4); transform: translateX(5px); }
-    .modal-button { width: 100%; padding: 1.2rem 2rem; margin-top: 2rem; background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark)); color: white; border: none; border-radius: 12px; font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3); }
-    .modal-button:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(168, 85, 247, 0.5); }
-    .terms-checkbox { display: flex; align-items: center; gap: 1rem; margin: 2rem 0; padding: 1.5rem; background: rgba(168, 85, 247, 0.05); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; }
-    .terms-checkbox input[type="checkbox"] { width: 24px; height: 24px; cursor: pointer; accent-color: var(--purple-primary); flex-shrink: 0; }
-    .terms-checkbox label { cursor: pointer; color: var(--text-secondary); font-weight: 500; margin: 0; }
-    #downloadButton { width: 100%; padding: 1.2rem 2rem; margin-top: 1rem; background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark)); color: white; border: 2px solid #ffffff; border-radius: 12px; font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3); position: relative; overflow: hidden; }
-    #downloadButton:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.5); }
-    #downloadButton:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
-    #downloadButton:not(:disabled)::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent); }
-    #downloadButton:not(:disabled):hover::before { left: 100%; transition: left 0.5s; }
+
+    /* Buttons */
+    .btn { padding: 1.2rem 3rem; border-radius: 16px; font-weight: 700; font-size: 1.15rem; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; font-family: inherit; }
+    .btn-primary { background: linear-gradient(90deg, #a855f7 0%, #c084fc 25%, #d946ef 75%, #e879f9 100%); color: white; box-shadow: 0 0 20px rgba(168,85,247,0.5); position: relative; overflow: hidden; }
+    .btn-primary::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: left 0.5s; }
+    .btn-primary:hover::before { left: 100%; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(168,85,247,0.8); }
+    .btn-secondary { background: transparent; color: var(--text-primary); border: 2.5px solid var(--purple-primary); }
+    .btn-secondary:hover { background: rgba(168,85,247,0.1); transform: translateY(-3px); }
+
+    /* NEW VERSION badge wrapper */
+    .btn-badge-wrap { position: relative; display: inline-block; }
+    .new-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: #16a34a; color: #fff; font-size: 11px; font-weight: 700; padding: 2px 12px; border-radius: 999px; white-space: nowrap; border: 2px solid var(--bg-dark); letter-spacing: 0.5px; z-index: 1; }
+    .btn-green-stroke { border: 2.5px solid #22c55e !important; box-shadow: 0 0 0 3px rgba(34,197,94,0.2), 0 0 20px rgba(168,85,247,0.5) !important; }
+
+    /* Hero visual */
     .hero-visual { position: relative; }
-    .click-demo { background: linear-gradient(135deg, var(--bg-card), #252525); border-radius: 24px; padding: 3rem; border: 1px solid rgba(168, 85, 247, 0.2); position: relative; overflow: hidden; }
-    .click-demo::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%; background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), transparent); pointer-events: none; }
-    .demo-screen { background: #0a0a0a; border-radius: 16px; padding: 2rem; position: relative; min-height: 300px; display: flex; flex-direction: column; gap: 1.5rem; }
-    .demo-control { background: rgba(168, 85, 247, 0.1); border: 2px solid var(--purple-primary); border-radius: 12px; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .click-demo { background: linear-gradient(135deg, var(--bg-card), #252525); border-radius: 24px; padding: 3rem; border: 1px solid rgba(168,85,247,0.2); position: relative; overflow: hidden; }
+    .click-demo::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%; background: linear-gradient(135deg, rgba(168,85,247,0.1), transparent); pointer-events: none; }
+    .demo-screen { background: #0a0a0a; border-radius: 16px; padding: 2rem; min-height: 300px; display: flex; flex-direction: column; gap: 1.5rem; }
+    .demo-control { background: rgba(168,85,247,0.1); border: 2px solid var(--purple-primary); border-radius: 12px; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
     .demo-control span { font-weight: 600; color: var(--purple-light); }
-    .demo-toggle { width: 60px; height: 30px; background: var(--purple-primary); border-radius: 15px; position: relative; cursor: pointer; }
-    .demo-toggle::after { content: ''; position: absolute; width: 24px; height: 24px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: transform 0.3s; }
-    .demo-clicks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-    .click-indicator { aspect-ratio: 1; background: linear-gradient(135deg, #2a2a3a, #1a1a2a); border: 2px solid var(--purple-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 700; color: var(--purple-light); animation: keyPress 1.2s ease-in-out infinite; position: relative; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
-    .click-indicator:nth-child(1) { animation-delay: 0s; } .click-indicator:nth-child(2) { animation-delay: 0.3s; } .click-indicator:nth-child(3) { animation-delay: 0.6s; } .click-indicator:nth-child(4) { animation-delay: 0.9s; } .click-indicator:nth-child(5) { animation-delay: 1.2s; } .click-indicator:nth-child(6) { animation-delay: 1.5s; }
-    @keyframes keyPress { 0%, 90%, 100% { transform: translateY(0px); background: linear-gradient(135deg, #2a2a3a, #1a1a2a); } 50% { transform: translateY(8px); background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark)); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2); } }
+    .demo-toggle { width: 60px; height: 30px; background: var(--purple-primary); border-radius: 15px; position: relative; }
+    .demo-toggle::after { content: ''; position: absolute; width: 24px; height: 24px; background: white; border-radius: 50%; top: 3px; left: 3px; }
+    .demo-clicks { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+    .click-indicator { aspect-ratio: 1; background: linear-gradient(135deg, #2a2a3a, #1a1a2a); border: 2px solid var(--purple-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 700; color: var(--purple-light); animation: keyPress 1.2s ease-in-out infinite; }
+    .click-indicator:nth-child(1){animation-delay:0s} .click-indicator:nth-child(2){animation-delay:0.3s} .click-indicator:nth-child(3){animation-delay:0.6s} .click-indicator:nth-child(4){animation-delay:0.9s} .click-indicator:nth-child(5){animation-delay:1.2s} .click-indicator:nth-child(6){animation-delay:1.5s}
+    @keyframes keyPress { 0%,90%,100%{transform:translateY(0);background:linear-gradient(135deg,#2a2a3a,#1a1a2a)} 50%{transform:translateY(8px);background:linear-gradient(135deg,var(--purple-primary),var(--purple-dark))} }
+
+    /* Stats */
     .stats { max-width: 1400px; margin: 4rem auto; padding: 0 2rem; }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-    .stat-card { background: var(--bg-card); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.1); text-align: center; transition: all 0.3s; }
-    .stat-card:hover { transform: translateY(-5px); border-color: var(--purple-primary); background: linear-gradient(135deg, var(--bg-card), #252525); }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 2rem; }
+    .stat-card { background: var(--bg-card); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(168,85,247,0.1); text-align: center; transition: all 0.3s; }
+    .stat-card:hover { transform: translateY(-5px); border-color: var(--purple-primary); }
     .stat-number { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, var(--purple-primary), var(--purple-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
     .stat-label { color: var(--text-secondary); font-size: 1.1rem; font-weight: 500; }
+
+    /* Features */
     .features { max-width: 1400px; margin: 8rem auto; padding: 0 2rem; }
     .section-header { text-align: center; margin-bottom: 5rem; }
     .section-header h2 { font-size: 4.5rem; font-weight: 800; margin-bottom: 1rem; }
     .section-header p { font-size: 1.4rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
-    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
-    .feature-card { background: var(--bg-card); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.1); transition: all 0.3s; position: relative; overflow: hidden; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); gap: 2rem; }
+    .feature-card { background: var(--bg-card); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(168,85,247,0.1); transition: all 0.3s; position: relative; overflow: hidden; }
     .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--purple-primary), var(--purple-light)); transform: scaleX(0); transition: transform 0.3s; }
     .feature-card:hover::before { transform: scaleX(1); }
     .feature-card:hover { transform: translateY(-8px); border-color: var(--purple-primary); }
+    .feature-card.premium-card { border-color: rgba(245,158,11,0.3); }
+    .feature-card.premium-card::before { background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary)); }
+    .feature-card.premium-card:hover { border-color: var(--gold-primary); }
     .feature-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark)); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 1.5rem; }
+    .feature-card.premium-card .feature-icon { background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary)); }
     .feature-card h3 { font-size: 1.8rem; margin-bottom: 1rem; font-weight: 700; }
     .feature-card p { color: var(--text-secondary); line-height: 1.8; font-size: 1.15rem; }
+    .premium-tag { display: inline-block; background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary)); color: #000; font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-left: 0.5rem; vertical-align: middle; }
+
+    /* Themes preview */
+    .themes-section { max-width: 1400px; margin: 8rem auto; padding: 0 2rem; }
+    .themes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr)); gap: 1rem; margin-top: 3rem; }
+    .theme-dot { border-radius: 16px; padding: 1.5rem 1rem; text-align: center; font-weight: 600; font-size: 0.95rem; border: 2px solid transparent; transition: all 0.3s; cursor: default; position: relative; overflow: hidden; }
+    .theme-dot:hover { transform: translateY(-4px); }
+    .theme-dot .premium-label { font-size: 0.7rem; font-weight: 700; opacity: 0.8; display: block; margin-top: 4px; }
+    .t-purple { background: rgba(168,85,247,0.15); border-color: #a855f7; color: #c084fc; }
+    .t-blue   { background: rgba(59,130,246,0.15); border-color: #3b82f6; color: #93c5fd; }
+    .t-green  { background: rgba(34,197,94,0.15);  border-color: #22c55e; color: #86efac; }
+    .t-red    { background: rgba(239,68,68,0.15);   border-color: #ef4444; color: #fca5a5; }
+    .t-gold   { background: rgba(245,158,11,0.15);  border-color: #f59e0b; color: #fcd34d; }
+    .t-cyan   { background: rgba(6,182,212,0.15);   border-color: #06b6d4; color: #67e8f9; }
+    .t-pink   { background: rgba(236,72,153,0.15);  border-color: #ec4899; color: #f9a8d4; }
+    .t-orange { background: rgba(249,115,22,0.15);  border-color: #f97316; color: #fdba74; }
+    .t-black  { background: rgba(255,255,255,0.05); border-color: #555; color: #aaa; }
+    .t-white  { background: rgba(255,255,255,0.1);  border-color: #ccc; color: #fff; }
+
+    /* How it works */
     .how-it-works { max-width: 1200px; margin: 8rem auto; padding: 0 2rem; }
-    .steps { position: relative; margin-top: 4rem; }
+    .steps { margin-top: 4rem; }
     .step { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 6rem; align-items: center; }
     .step:nth-child(even) { direction: rtl; }
     .step:nth-child(even) > * { direction: ltr; }
     .step-content { position: relative; }
-    .step-number { font-size: 6rem; font-weight: 800; color: rgba(168, 85, 247, 0.1); position: absolute; top: -2rem; left: -1rem; z-index: -1; }
+    .step-number { font-size: 6rem; font-weight: 800; color: rgba(168,85,247,0.1); position: absolute; top: -2rem; left: -1rem; z-index: -1; }
     .step-content h3 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700; }
     .step-content p { color: var(--text-secondary); line-height: 1.9; font-size: 1.2rem; }
-    .step-visual { background: linear-gradient(135deg, var(--bg-card), #252525); border-radius: 20px; padding: 2rem; border: 1px solid rgba(168, 85, 247, 0.2); min-height: 250px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+    .step-visual { background: linear-gradient(135deg, var(--bg-card), #252525); border-radius: 20px; padding: 2rem; border: 1px solid rgba(168,85,247,0.2); min-height: 250px; display: flex; align-items: center; justify-content: center; }
     .step-icon { font-weight: 700; font-size: 1.5rem; color: var(--purple-light); background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark)); padding: 1.5rem 2.5rem; border-radius: 12px; letter-spacing: 2px; }
+
+    /* Social */
     .social-proof { max-width: 1400px; margin: 8rem auto; padding: 0 2rem; }
     .social-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem; }
-    .social-card { background: var(--bg-card); padding: 2rem 3rem; border-radius: 16px; border: 1px solid rgba(168, 85, 247, 0.1); display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text-primary); transition: all 0.3s; font-weight: 600; font-size: 1.1rem; }
-    .social-card:hover { transform: translateY(-5px); border-color: var(--purple-primary); background: linear-gradient(135deg, var(--bg-card), #252525); }
+    .social-card { background: var(--bg-card); padding: 2rem 3rem; border-radius: 16px; border: 1px solid rgba(168,85,247,0.1); display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text-primary); transition: all 0.3s; font-weight: 600; font-size: 1.1rem; }
+    .social-card:hover { transform: translateY(-5px); border-color: var(--purple-primary); }
     .social-icon { width: 32px; height: 32px; }
+
+    /* CTA */
     .cta-section { max-width: 1200px; margin: 8rem auto 6rem; padding: 0 2rem; }
     .cta-box { background: linear-gradient(135deg, var(--purple-dark), var(--purple-primary)); padding: 5rem 3rem; border-radius: 30px; text-align: center; position: relative; overflow: hidden; }
     .cta-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 20s linear infinite; }
-    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes rotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
     .cta-box h2 { font-size: 4rem; font-weight: 800; margin-bottom: 1.5rem; position: relative; z-index: 1; }
     .cta-box p { font-size: 1.5rem; margin-bottom: 2.5rem; opacity: 0.9; position: relative; z-index: 1; }
     .cta-box .btn { background: white; color: var(--purple-dark); position: relative; z-index: 1; }
     .cta-box .btn:hover { background: #f5f5f5; }
+
+    /* Rating */
     .rating-section { max-width: 1200px; margin: 6rem auto 6rem; padding: 0 2rem; }
     .rating-box { background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary)); padding: 5rem 3rem; border-radius: 30px; text-align: center; position: relative; overflow: hidden; }
     .rating-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%); animation: rotate 20s linear infinite; }
@@ -130,24 +190,68 @@
     .rating-box h2 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; position: relative; z-index: 1; color: white; }
     .rating-box > p { font-size: 1.3rem; margin-bottom: 2.5rem; opacity: 0.9; position: relative; z-index: 1; color: white; }
     .star-rating { display: flex; justify-content: center; gap: 1rem; margin: 2rem 0; position: relative; z-index: 1; }
-    .star { font-size: 3.5rem; cursor: pointer; color: rgba(255, 255, 255, 0.3); transition: all 0.3s; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)); }
-    .star:hover, .star.active { color: #ffffff; transform: scale(1.2); filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)); }
+    .star { font-size: 3.5rem; cursor: pointer; color: rgba(255,255,255,0.3); transition: all 0.3s; }
+    .star:hover, .star.active { color: #fff; transform: scale(1.2); filter: drop-shadow(0 0 10px rgba(255,255,255,0.8)); }
     .rating-form { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
-    .rating-form input[type="email"] { width: 100%; padding: 1.2rem; border-radius: 16px; border: 2px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.95); color: #0d0d0d; font-size: 1.1rem; font-family: inherit; margin-bottom: 1rem; transition: all 0.3s; }
-    .rating-form input[type="email"]:focus { outline: none; border-color: #ffffff; background: white; box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
-    .rating-form input[type="email"]::placeholder { color: rgba(13, 13, 13, 0.5); }
-    .rating-form textarea { width: 100%; padding: 1.5rem; border-radius: 16px; border: 2px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.95); color: #0d0d0d; font-size: 1.1rem; font-family: inherit; resize: vertical; min-height: 150px; margin-bottom: 1.5rem; transition: all 0.3s; }
-    .rating-form textarea:focus { outline: none; border-color: #ffffff; background: white; box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
-    .rating-form textarea::placeholder { color: rgba(13, 13, 13, 0.5); }
-    .submit-rating { width: 100%; padding: 1.5rem 3rem; background: white; color: var(--gold-dark); border: none; border-radius: 16px; font-weight: 700; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); }
-    .submit-rating:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5); background: #f5f5f5; }
+    .rating-form input[type="email"] { width: 100%; padding: 1.2rem; border-radius: 16px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.95); color: #0d0d0d; font-size: 1.1rem; font-family: inherit; margin-bottom: 1rem; transition: all 0.3s; }
+    .rating-form input[type="email"]:focus { outline: none; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.5); }
+    .rating-form textarea { width: 100%; padding: 1.5rem; border-radius: 16px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.95); color: #0d0d0d; font-size: 1.1rem; font-family: inherit; resize: vertical; min-height: 150px; margin-bottom: 1.5rem; transition: all 0.3s; }
+    .rating-form textarea:focus { outline: none; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.5); }
+    .submit-rating { width: 100%; padding: 1.5rem 3rem; background: white; color: var(--gold-dark); border: none; border-radius: 16px; font-weight: 700; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; font-family: inherit; }
+    .submit-rating:hover:not(:disabled) { transform: translateY(-3px); background: #f5f5f5; }
     .submit-rating:disabled { opacity: 0.6; cursor: not-allowed; }
     .rating-message { margin-top: 1rem; padding: 1rem; border-radius: 12px; font-weight: 600; display: none; }
-    .rating-message.success { background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 2px solid #22c55e; }
-    .rating-message.error { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 2px solid #ef4444; }
-    footer { border-top: 1px solid rgba(168, 85, 247, 0.1); padding: 3rem 2rem; text-align: center; color: var(--text-secondary); }
-    @media (max-width: 1024px) { .hero-content { grid-template-columns: 1fr; gap: 3rem; } .hero-text h1 { font-size: 3.5rem; } .step { grid-template-columns: 1fr; gap: 2rem; } .step:nth-child(even) { direction: ltr; } }
-    @media (max-width: 768px) { .nav-links { display: none; } .hero-text h1 { font-size: 2.5rem; } .section-header h2 { font-size: 2.5rem; } .features-grid { grid-template-columns: 1fr; } .cta-box { padding: 3rem 2rem; } .cta-box h2 { font-size: 2rem; } .rating-box { padding: 3rem 2rem; } .rating-box h2 { font-size: 2rem; } .star { font-size: 2.5rem; } .modal-content { width: 95%; margin: 20% auto; padding: 1.5rem; } .modal h2 { font-size: 1.8rem; } }
+    .rating-message.success { background: rgba(34,197,94,0.2); color: #22c55e; border: 2px solid #22c55e; }
+    .rating-message.error { background: rgba(239,68,68,0.2); color: #ef4444; border: 2px solid #ef4444; }
+
+    /* Modals */
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .modal-content { background: linear-gradient(135deg, var(--bg-card), #252525); margin: 5% auto; padding: 2.5rem; border: 1px solid rgba(168,85,247,0.2); border-radius: 24px; width: 90%; max-width: 700px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.8); animation: slideIn 0.3s ease-out; }
+    @keyframes slideIn { from{transform:translateY(-50px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .close-modal { color: var(--text-secondary); float: right; font-size: 2rem; font-weight: bold; cursor: pointer; transition: color 0.3s; line-height: 1; }
+    .close-modal:hover { color: var(--text-primary); }
+    .modal h2 { font-size: 2.5rem; margin-top: 1rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--purple-primary), var(--purple-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .modal-section { margin-bottom: 2rem; }
+    .modal-section h3 { font-size: 1.3rem; color: var(--purple-light); margin-bottom: 0.8rem; font-weight: 700; }
+    .modal-section p { color: var(--text-secondary); line-height: 1.8; font-size: 1rem; }
+    .warning-box { background: rgba(168,85,247,0.1); border-left: 4px solid var(--purple-primary); padding: 1.5rem; margin: 1.5rem 0; border-radius: 8px; }
+    .warning-box strong { color: var(--purple-light); }
+    .more-info-button { display: inline-block; margin-top: 1rem; padding: 0.7rem 1.5rem; background: rgba(168,85,247,0.2); color: var(--purple-light); border: 1px solid var(--purple-light); border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.95rem; }
+    .more-info-button:hover { background: rgba(168,85,247,0.4); transform: translateX(5px); }
+    .modal-button { width: 100%; padding: 1.2rem 2rem; margin-top: 2rem; background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark)); color: white; border: none; border-radius: 12px; font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: all 0.3s; font-family: inherit; }
+    .modal-button:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(168,85,247,0.5); }
+    .terms-checkbox { display: flex; align-items: center; gap: 1rem; margin: 2rem 0; padding: 1.5rem; background: rgba(168,85,247,0.05); border: 1px solid rgba(168,85,247,0.2); border-radius: 12px; }
+    .terms-checkbox input[type="checkbox"] { width: 24px; height: 24px; cursor: pointer; accent-color: var(--purple-primary); flex-shrink: 0; }
+    .terms-checkbox label { cursor: pointer; color: var(--text-secondary); font-weight: 500; margin: 0; }
+    #downloadButton { width: 100%; padding: 1.2rem 2rem; margin-top: 1rem; background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark)); color: white; border: 2px solid #ffffff; border-radius: 12px; font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 20px rgba(255,255,255,0.5); position: relative; overflow: hidden; font-family: inherit; }
+    #downloadButton:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 0 30px rgba(255,255,255,0.8); }
+    #downloadButton:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+    /* Footer */
+    footer { border-top: 1px solid rgba(168,85,247,0.1); padding: 3rem 2rem; text-align: center; color: var(--text-secondary); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-content { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-text h1 { font-size: 3.5rem; }
+      .step { grid-template-columns: 1fr; gap: 2rem; }
+      .step:nth-child(even) { direction: ltr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-text h1 { font-size: 2.5rem; }
+      .section-header h2 { font-size: 2.5rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .cta-box { padding: 3rem 2rem; }
+      .cta-box h2 { font-size: 2rem; }
+      .rating-box { padding: 3rem 2rem; }
+      .rating-box h2 { font-size: 2rem; }
+      .star { font-size: 2.5rem; }
+      .modal-content { width: 95%; margin: 20% auto; padding: 1.5rem; }
+      .modal h2 { font-size: 1.8rem; }
+      .themes-grid { grid-template-columns: repeat(3,1fr); }
+    }
   </style>
 </head>
 <body>
@@ -164,13 +268,13 @@
       </div>
       <div class="warning-box">
         <strong>Important: Windows Defender SmartScreen Warning</strong>
-        <p style="margin-top: 0.8rem;">When you download and run sClicker, Windows may display a security warning. This is completely normal for new applications.</p>
+        <p style="margin-top:0.8rem">When you download and run sClicker, Windows may display a security warning. This is completely normal for new applications.</p>
         <button onclick="openWarningModalFromTerms()" class="more-info-button">More on this topic &rarr;</button>
       </div>
       <div class="modal-section">
         <h3>Terms of Use</h3>
-        <p>You agree to use sClicker only for lawful and ethical purposes. sClicker is designed for legitimate productivity automation tasks such as automating repetitive work processes, data entry, and similar activities. You understand that misuse of autoclicker tools is prohibited, including but not limited to using it for:</p>
-        <ul style="margin-top: 0.8rem; margin-left: 1rem; color: var(--text-secondary);">
+        <p>You agree to use sClicker only for lawful and ethical purposes. Misuse is prohibited, including:</p>
+        <ul style="margin-top:0.8rem;margin-left:1rem;color:var(--text-secondary)">
           <li>Cheating in online games or gaming platforms</li>
           <li>Unauthorized access to systems or accounts</li>
           <li>Bypassing security measures or anti-cheat systems</li>
@@ -179,23 +283,20 @@
       </div>
       <div class="modal-section">
         <h3>Disclaimer</h3>
-        <p>sClicker is provided "as-is" without warranty of any kind. The developers are not responsible for any damage, data loss, system issues, account bans, or any other consequences caused by the use or misuse of this software. Users assume full responsibility for how they use sClicker. Use at your own risk.</p>
+        <p>sClicker is provided "as-is" without warranty of any kind. The developers are not responsible for any damage, data loss, account bans, or any other consequences. Use at your own risk.</p>
       </div>
       <div class="modal-section">
         <h3>License &amp; Copyright</h3>
-        <p>sClicker is released under the MIT License. This is a permissive open-source license that allows you to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, provided that copyright and license notices are included in all copies or substantial portions of the software.</p>
-        <p style="margin-top: 1rem;">The full MIT License text is available on GitHub: <strong>SNKgamesofficial/sClicker</strong></p>
-        <p style="margin-top: 1rem;">Copyright &copy; 2026 SnakyGames</p>
+        <p>sClicker is released under the MIT License. The full license text is available on GitHub: <strong>SNKgamesofficial/sClicker</strong></p>
+        <p style="margin-top:1rem">Copyright &copy; 2026 SnakyGames</p>
       </div>
       <div class="modal-section">
         <h3>User Responsibility</h3>
-        <p>By using sClicker, you agree that:</p>
-        <ul style="margin-top: 0.8rem; margin-left: 1rem; color: var(--text-secondary);">
-          <li>You will use sClicker in compliance with all applicable laws and regulations</li>
-          <li>You will not use sClicker to violate terms of service of any third-party applications</li>
-          <li>You understand the risks of using automation tools</li>
-          <li>You accept full responsibility for any consequences of using sClicker</li>
-          <li>The developers are not liable for account suspensions, bans, or any damages</li>
+        <ul style="margin-top:0.8rem;margin-left:1rem;color:var(--text-secondary)">
+          <li>Use sClicker in compliance with all applicable laws</li>
+          <li>Do not violate terms of service of third-party applications</li>
+          <li>You accept full responsibility for any consequences</li>
+          <li>The developers are not liable for bans or damages</li>
         </ul>
       </div>
       <div class="terms-checkbox">
@@ -213,63 +314,69 @@
       <h2>Why Does Windows Show a Warning?</h2>
       <div class="modal-section">
         <h3>It's Not Because There's a Virus</h3>
-        <p>sClicker is 100% safe and virus-free. The Windows SmartScreen warning appears simply because sClicker is a new application that Microsoft hasn't widely recognized yet. This is completely normal for small, independent software projects.</p>
+        <p>sClicker is 100% safe and virus-free. The Windows SmartScreen warning appears simply because sClicker is a new application that Microsoft hasn't widely recognized yet.</p>
       </div>
       <div class="warning-box">
         <strong>Why you can trust sClicker:</strong>
-        <ul style="margin-top: 0.5rem; margin-left: 1rem; color: var(--text-secondary);">
-          <li>Source code is available on GitHub for transparency</li>
-          <li>No internet connections - works completely offline</li>
+        <ul style="margin-top:0.5rem;margin-left:1rem;color:var(--text-secondary)">
+          <li>Source code available on GitHub</li>
+          <li>No internet connections – works completely offline</li>
           <li>No data collection or telemetry</li>
           <li>Open source and community-driven</li>
         </ul>
       </div>
       <div class="modal-section">
-        <h3>Why Does SmartScreen Show This Warning?</h3>
-        <p>Microsoft SmartScreen checks applications against their database. When an app is new or hasn't been downloaded by millions of users yet, Windows displays a caution message as a security measure. This happens to many legitimate applications.</p>
-        <p style="margin-top: 1rem;">It's like a safety feature - Windows doesn't know the app yet, so it warns you. But that doesn't mean it's dangerous!</p>
-      </div>
-      <div class="modal-section">
         <h3>How to Safely Install sClicker</h3>
-        <p>When you see the warning:</p>
-        <ol style="margin-top: 0.8rem; margin-left: 1rem; color: var(--text-secondary);">
+        <ol style="margin-top:0.8rem;margin-left:1rem;color:var(--text-secondary)">
           <li>Click "More info" on the SmartScreen dialog</li>
           <li>Click "Run anyway" to proceed</li>
-          <li>That's it! sClicker is now installed and ready to use</li>
+          <li>That's it! sClicker is now ready to use</li>
         </ol>
       </div>
       <div class="warning-box">
-        <strong>Fun Fact:</strong> Many popular applications from small developers show similar warnings when they're first released. This doesn't indicate any problem - it just means the application is new to Windows' database.
+        <strong>Fun Fact:</strong> Many popular apps from small developers show this warning when first released. It just means the app is new to Windows' database.
       </div>
       <div class="modal-section">
         <h3>Your Security is Our Priority</h3>
-        <p>We respect your privacy and security completely. sClicker requires no personal information, doesn't access your files without permission, and has no hidden features or malicious code. You can verify this by checking our open source repository on GitHub.</p>
+        <p>sClicker requires no personal information, doesn't access your files without permission, and has no hidden features. Verify this on our GitHub repository.</p>
       </div>
       <button onclick="closeWarningModal()" class="modal-button">I understand</button>
     </div>
   </div>
 
+  <!-- Nav -->
   <nav>
     <div class="nav-container">
       <div class="logo">sClicker</div>
       <ul class="nav-links">
         <li><a href="#features">Features</a></li>
+        <li><a href="#themes">Themes</a></li>
         <li><a href="#how">How it Works</a></li>
         <li><a href="#download">Download</a></li>
       </ul>
     </div>
   </nav>
 
+  <!-- Hero -->
   <section class="hero">
     <div class="hero-content">
       <div class="hero-text">
-        <h1>The Fastest <span class="highlight">Auto Clicker</span> for Windows</h1>
+        <h1>
+          The Fastest
+          <span class="highlight">Auto Clicker</span>
+          for Windows
+        </h1>
         <p>Maximize your productivity with precise click sequences. Easy to use, extremely powerful, and fully customizable.</p>
         <div class="hero-buttons">
-          <button onclick="openTermsModal()" class="btn btn-primary">Download for Windows (V3.0)</button>
+          <div class="btn-badge-wrap">
+            <span class="new-badge">NEW VERSION</span>
+            <button onclick="openTermsModal()" class="btn btn-primary btn-green-stroke">
+              Download for Windows (V3.0)
+            </button>
+          </div>
           <button onclick="openWarningModal()" class="btn btn-secondary">Why the Warning?</button>
         </div>
-        <p class="warning-text">&#9888;&#65039; Please inform yourself and read the text before installing!</p>
+        <p class="warning-text">⚠️ Free to use &middot; Premium features available after login</p>
       </div>
       <div class="hero-visual">
         <div class="click-demo">
@@ -292,30 +399,96 @@
     </div>
   </section>
 
+  <!-- Stats -->
   <section class="stats">
     <div class="stats-grid">
       <div class="stat-card"><div class="stat-number">1ms</div><div class="stat-label">Minimum Delay</div></div>
       <div class="stat-card"><div class="stat-number">&#8734;</div><div class="stat-label">Click Sequences</div></div>
-      <div class="stat-card"><div class="stat-number">4</div><div class="stat-label">Color Themes</div></div>
+      <div class="stat-card"><div class="stat-number">10</div><div class="stat-label">Color Themes</div></div>
       <div class="stat-card"><div class="stat-number">100%</div><div class="stat-label">Free</div></div>
     </div>
   </section>
 
+  <!-- Features -->
   <section class="features" id="features">
     <div class="section-header">
       <h2>Powerful Features</h2>
       <p>Everything you need to automate your clicks</p>
     </div>
     <div class="features-grid">
-      <div class="feature-card"><div class="feature-icon">&#9889;</div><h3>Lightning Fast Speed</h3><p>Set the delay between actions precisely. From milliseconds to seconds - full control over your click speed.</p></div>
-      <div class="feature-card"><div class="feature-icon">&#127919;</div><h3>Click Sequences</h3><p>Create complex workflows with multiple actions. Different click types, coordinates, and individual workflows.</p></div>
-      <div class="feature-card"><div class="feature-icon">&#9881;&#65039;</div><h3>Simple Control</h3><p>F6 to start, F7 to stop. Intuitive hotkeys for instant control - even while using other programs.</p></div>
-      <div class="feature-card"><div class="feature-icon">&#128260;</div><h3>Repeat Mode</h3><p>Switch between continuous clicking and single execution. Perfect for gaming and productivity tasks.</p></div>
-      <div class="feature-card"><div class="feature-icon">&#127912;</div><h3>Custom Themes</h3><p>Choose between Purple, Blue, Green, and Red. Design sClicker exactly to your taste.</p></div>
-      <div class="feature-card"><div class="feature-icon">&#127758;</div><h3>Multi-Language</h3><p>Available in multiple languages. Easy language switching directly in the settings.</p></div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#9889;</div>
+        <h3>Lightning Fast Speed</h3>
+        <p>Set the delay between actions precisely. From milliseconds to seconds – full control over your click speed.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#127919;</div>
+        <h3>Click Sequences</h3>
+        <p>Create complex workflows with multiple actions. Different click types, coordinates, and individual workflows.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#9881;&#65039;</div>
+        <h3>Simple Control</h3>
+        <p>F6 to start, F7 to stop. Intuitive hotkeys for instant control – even while using other programs.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#128565;</div>
+        <h3>Hold Click</h3>
+        <p>New Hold Click action type – hold the mouse button down for a set duration. Perfect for drag actions and complex workflows.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#128260;</div>
+        <h3>Repeat Mode</h3>
+        <p>Switch between continuous clicking and single execution. Perfect for gaming and productivity tasks.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#127758;</div>
+        <h3>Multi-Language</h3>
+        <p>Available in multiple languages. Easy language switching directly in the settings.</p>
+      </div>
+
+      <div class="feature-card premium-card">
+        <div class="feature-icon">&#128274;</div>
+        <h3>Login System <span class="premium-tag">NEW</span></h3>
+        <p>Create your free account to unlock Premium features like Gold, Cyan, Pink, Orange, Black and White color themes – and more features coming soon.</p>
+      </div>
+
+      <div class="feature-card premium-card">
+        <div class="feature-icon">&#127912;</div>
+        <h3>10 Color Themes <span class="premium-tag">PREMIUM</span></h3>
+        <p>Choose from 10 stunning themes. Purple, Blue, Green and Red are free. Gold, Cyan, Pink, Orange, Black and White unlock after login.</p>
+      </div>
+
     </div>
   </section>
 
+  <!-- Themes -->
+  <section class="themes-section" id="themes">
+    <div class="section-header">
+      <h2>10 Color Themes</h2>
+      <p>4 free themes, 6 premium themes unlocked after login</p>
+    </div>
+    <div class="themes-grid">
+      <div class="theme-dot t-purple">Purple</div>
+      <div class="theme-dot t-blue">Blue</div>
+      <div class="theme-dot t-green">Green</div>
+      <div class="theme-dot t-red">Red</div>
+      <div class="theme-dot t-gold">Gold<span class="premium-label">&#128274; Premium</span></div>
+      <div class="theme-dot t-cyan">Cyan<span class="premium-label">&#128274; Premium</span></div>
+      <div class="theme-dot t-pink">Pink<span class="premium-label">&#128274; Premium</span></div>
+      <div class="theme-dot t-orange">Orange<span class="premium-label">&#128274; Premium</span></div>
+      <div class="theme-dot t-black">Black<span class="premium-label">&#128274; Premium</span></div>
+      <div class="theme-dot t-white">White<span class="premium-label">&#128274; Premium</span></div>
+    </div>
+  </section>
+
+  <!-- How it works -->
   <section class="how-it-works" id="how">
     <div class="section-header">
       <h2>Ready in 3 Steps</h2>
@@ -323,55 +496,91 @@
     </div>
     <div class="steps">
       <div class="step">
-        <div class="step-content"><div class="step-number">01</div><h3>Download &amp; Install</h3><p>Download the latest version and start the program. No complicated installation, no hidden costs. Just download and get started.</p></div>
+        <div class="step-content">
+          <div class="step-number">01</div>
+          <h3>Download &amp; Install</h3>
+          <p>Download the latest version and start the program. No complicated installation, no hidden costs. Just download and get started.</p>
+        </div>
         <div class="step-visual"><div class="step-icon">DOWNLOAD</div></div>
       </div>
       <div class="step">
-        <div class="step-content"><div class="step-number">02</div><h3>Customize Settings</h3><p>Adjust the delay with the slider. Choose your color theme and configure your hotkeys. Create click sequences to your liking.</p></div>
+        <div class="step-content">
+          <div class="step-number">02</div>
+          <h3>Customize Settings</h3>
+          <p>Adjust the delay, choose your theme, configure hotkeys and build your click sequences. Login for premium themes.</p>
+        </div>
         <div class="step-visual"><div class="step-icon">SETTINGS</div></div>
       </div>
       <div class="step">
-        <div class="step-content"><div class="step-number">03</div><h3>Start &amp; Be Productive</h3><p>Press F6 to start and F7 to stop. That's it! You can now use your time for more important things.</p></div>
+        <div class="step-content">
+          <div class="step-number">03</div>
+          <h3>Start &amp; Be Productive</h3>
+          <p>Press F6 to start and F7 to stop. That's it – you can now use your time for more important things.</p>
+        </div>
         <div class="step-visual"><div class="step-icon">START</div></div>
       </div>
     </div>
   </section>
 
+  <!-- Social -->
   <section class="social-proof">
     <div class="section-header">
       <h2>Join the Community</h2>
       <p>Become part of our growing community</p>
     </div>
     <div class="social-links">
-      <a href="https://discord.gg/cqtD82te96" class="social-card"><img src="https://cdn.simpleicons.org/discord/5865F2" alt="Discord" class="social-icon"><span>Discord Server</span></a>
-      <a href="mailto:snkgamesdevmode@gmail.com" class="social-card"><img src="https://cdn.simpleicons.org/gmail/EA4335" alt="Email" class="social-icon"><span>Contact Us</span></a>
-      <a href="YOUR_TIKTOK_LINK" class="social-card"><img src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok" class="social-icon"><span>Follow on TikTok</span></a>
+      <a href="https://discord.gg/cqtD82te96" class="social-card">
+        <img src="https://cdn.simpleicons.org/discord/5865F2" alt="Discord" class="social-icon">
+        <span>Discord Server</span>
+      </a>
+      <a href="mailto:snkgamesdevmode@gmail.com" class="social-card">
+        <img src="https://cdn.simpleicons.org/gmail/EA4335" alt="Email" class="social-icon">
+        <span>Contact Us</span>
+      </a>
+      <a href="https://www.tiktok.com/@sclicker" class="social-card">
+        <img src="https://cdn.simpleicons.org/tiktok/ffffff" alt="TikTok" class="social-icon">
+        <span>Follow on TikTok</span>
+      </a>
     </div>
   </section>
 
+  <!-- CTA -->
   <section class="cta-section" id="download">
     <div class="cta-box">
       <h2>Ready to get started?</h2>
-      <p>Download sClicker now for free and experience the future of click automation</p>
-      <button onclick="openTermsModal()" class="btn btn-primary">Free Download for Windows</button>
+      <p>Download sClicker V3.0 now for free and experience the future of click automation</p>
+      <div class="btn-badge-wrap" style="display:inline-block">
+        <span class="new-badge" style="border-color:#7e22ce">NEW VERSION</span>
+        <button onclick="openTermsModal()" class="btn" style="background:white;color:var(--purple-dark);font-family:inherit">
+          Free Download for Windows
+        </button>
+      </div>
     </div>
   </section>
 
+  <!-- Rating -->
   <section class="rating-section">
     <div class="rating-box">
       <h2>How would you rate sClicker?</h2>
       <p>Your feedback helps us improve and grow. Share your experience!</p>
       <div class="star-rating" id="starRating">
-        <span class="star" data-rating="1">&#9733;</span><span class="star" data-rating="2">&#9733;</span><span class="star" data-rating="3">&#9733;</span><span class="star" data-rating="4">&#9733;</span><span class="star" data-rating="5">&#9733;</span>
-        <span class="star" data-rating="6">&#9733;</span><span class="star" data-rating="7">&#9733;</span><span class="star" data-rating="8">&#9733;</span><span class="star" data-rating="9">&#9733;</span><span class="star" data-rating="10">&#9733;</span>
+        <span class="star" data-rating="1">&#9733;</span>
+        <span class="star" data-rating="2">&#9733;</span>
+        <span class="star" data-rating="3">&#9733;</span>
+        <span class="star" data-rating="4">&#9733;</span>
+        <span class="star" data-rating="5">&#9733;</span>
+        <span class="star" data-rating="6">&#9733;</span>
+        <span class="star" data-rating="7">&#9733;</span>
+        <span class="star" data-rating="8">&#9733;</span>
+        <span class="star" data-rating="9">&#9733;</span>
+        <span class="star" data-rating="10">&#9733;</span>
       </div>
-      <form class="rating-form" id="ratingForm" action="https://api.web3forms.com/submit" method="POST">
+      <form class="rating-form" id="ratingForm">
         <input type="hidden" name="access_key" value="cfcb5156-8b98-407c-83d6-f9b135423206">
         <input type="hidden" name="subject" id="emailSubject" value="sClicker Rating">
         <input type="hidden" name="from_name" value="sClicker User">
-        <input type="hidden" name="redirect" value="false">
         <input type="hidden" name="rating" id="ratingValue" value="">
-        <input type="email" name="email" id="userEmail" placeholder="Your email address" required style="width: 100%; padding: 1.2rem; border-radius: 16px; border: 2px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.95); color: #0d0d0d; font-size: 1.1rem; font-family: inherit; margin-bottom: 1rem; transition: all 0.3s;" />
+        <input type="email" name="email" id="userEmail" placeholder="Your email address" required>
         <textarea name="message" id="feedbackMessage" placeholder="Tell us what you think about sClicker... (optional)" maxlength="1000"></textarea>
         <button type="submit" class="submit-rating" id="submitRating" disabled>Submit Rating</button>
         <div class="rating-message" id="ratingMessage"></div>
@@ -389,8 +598,8 @@
     let timerFinished = false;
     let selectedRating = 0;
 
+    // Stars
     const stars = document.querySelectorAll('.star');
-    const ratingForm = document.getElementById('ratingForm');
     const submitRating = document.getElementById('submitRating');
     const ratingMessage = document.getElementById('ratingMessage');
 
@@ -404,106 +613,101 @@
         highlightStars(parseInt(this.getAttribute('data-rating')));
       });
     });
-
     document.getElementById('starRating').addEventListener('mouseleave', updateStars);
 
-    function highlightStars(rating) {
-      stars.forEach(star => {
-        star.classList.toggle('active', parseInt(star.getAttribute('data-rating')) <= rating);
-      });
+    function highlightStars(r) {
+      stars.forEach(s => s.classList.toggle('active', parseInt(s.getAttribute('data-rating')) <= r));
     }
-
     function updateStars() { highlightStars(selectedRating); }
 
-    ratingForm.addEventListener('submit', async function(e) {
+    document.getElementById('ratingForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      if (selectedRating === 0) { showMessage('Please select a rating before submitting.', 'error'); return; }
+      if (!selectedRating) { showMsg('Please select a rating before submitting.', 'error'); return; }
       submitRating.disabled = true;
       submitRating.textContent = 'Sending...';
       document.getElementById('ratingValue').value = selectedRating + '/10 Stars';
       document.getElementById('emailSubject').value = 'sClicker Rating: ' + selectedRating + '/10 Stars';
       try {
-        const formData = new FormData(ratingForm);
-        formData.append('redirect', 'false');
-        const response = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
-        const data = await response.json();
+        const fd = new FormData(this);
+        fd.append('redirect', 'false');
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+        const data = await res.json();
         if (data.success) {
-          showMessage('Thank you for your feedback! Your rating has been submitted successfully. \u2b50', 'success');
+          showMsg('Thank you! Your rating has been submitted. ⭐', 'success');
           setTimeout(() => {
             selectedRating = 0; updateStars();
             document.getElementById('feedbackMessage').value = '';
-            submitRating.disabled = true; submitRating.textContent = 'Submit Rating';
+            submitRating.disabled = true;
+            submitRating.textContent = 'Submit Rating';
             ratingMessage.style.display = 'none';
           }, 3000);
-        } else { throw new Error(data.message || 'Submission failed'); }
-      } catch (error) {
-        showMessage('Error: ' + error.message + '. Please try emailing us directly at snkgamesdevmode@gmail.com', 'error');
-        submitRating.disabled = false; submitRating.textContent = 'Submit Rating';
+        } else throw new Error(data.message || 'Submission failed');
+      } catch(err) {
+        showMsg('Error: ' + err.message + '. Email us at snkgamesdevmode@gmail.com', 'error');
+        submitRating.disabled = false;
+        submitRating.textContent = 'Submit Rating';
       }
     });
 
-    function showMessage(message, type) {
-      ratingMessage.textContent = message;
+    function showMsg(msg, type) {
+      ratingMessage.textContent = msg;
       ratingMessage.className = 'rating-message ' + type;
       ratingMessage.style.display = 'block';
     }
 
-    function openWarningModal() { document.getElementById("warningModal").style.display = "block"; }
-    function closeWarningModal() { document.getElementById("warningModal").style.display = "none"; }
+    // Modals
+    function openWarningModal() { document.getElementById('warningModal').style.display = 'block'; }
+    function closeWarningModal() { document.getElementById('warningModal').style.display = 'none'; }
+    function openWarningModalFromTerms() { closeTermsModal(); openWarningModal(); }
 
     function openTermsModal() {
-      document.getElementById("termsModal").style.display = "block";
-      document.getElementById("termsCheckbox").checked = false;
+      document.getElementById('termsModal').style.display = 'block';
+      document.getElementById('termsCheckbox').checked = false;
       timerFinished = false;
       updateDownloadButton();
-      startTimerOnModalOpen();
+      startTimer();
     }
-
     function closeTermsModal() {
-      document.getElementById("termsModal").style.display = "none";
+      document.getElementById('termsModal').style.display = 'none';
       if (countdownInterval) clearInterval(countdownInterval);
     }
 
-    function openWarningModalFromTerms() { closeTermsModal(); openWarningModal(); }
-
     function updateDownloadButton() {
-      const checkbox = document.getElementById("termsCheckbox");
-      const button = document.getElementById("downloadButton");
-      button.disabled = !timerFinished || !checkbox.checked;
+      const checked = document.getElementById('termsCheckbox').checked;
+      document.getElementById('downloadButton').disabled = !timerFinished || !checked;
     }
 
-    function startTimerOnModalOpen() {
-      const button = document.getElementById("downloadButton");
+    function startTimer() {
       downloadCountdown = 10;
-      button.disabled = true;
-      updateCountdownDisplay();
+      document.getElementById('downloadButton').disabled = true;
+      updateCountdown();
       countdownInterval = setInterval(() => {
         downloadCountdown--;
-        updateCountdownDisplay();
+        updateCountdown();
         if (downloadCountdown <= 0) {
           clearInterval(countdownInterval);
           timerFinished = true;
           updateDownloadButton();
-          button.textContent = "I Accept - Download sClicker";
+          document.getElementById('downloadButton').textContent = 'I Accept - Download sClicker';
         }
       }, 1000);
     }
 
-    function updateCountdownDisplay() {
-      document.getElementById("downloadButton").textContent = 'I Accept - Download sClicker (' + downloadCountdown + 's)';
+    function updateCountdown() {
+      document.getElementById('downloadButton').textContent = 'I Accept - Download sClicker (' + downloadCountdown + 's)';
     }
 
     function startDownload() {
-      if (timerFinished && document.getElementById("termsCheckbox").checked) {
-        window.location.href = "https://github.com/SNKgamesofficial/sClicker/releases/download/1.2/sClickerV1.2.exe";
+      if (timerFinished && document.getElementById('termsCheckbox').checked) {
+        window.location.href = 'https://github.com/SNKgamesofficial/sClicker/releases/download/1.2/sClickerV1.2.exe';
         closeTermsModal();
       }
     }
 
-    window.onclick = function(event) {
-      if (event.target == document.getElementById("warningModal")) document.getElementById("warningModal").style.display = "none";
-      if (event.target == document.getElementById("termsModal")) document.getElementById("termsModal").style.display = "none";
-    }
+    window.onclick = function(e) {
+      if (e.target == document.getElementById('warningModal')) closeWarningModal();
+      if (e.target == document.getElementById('termsModal')) closeTermsModal();
+    };
   </script>
 </body>
 </html>
