@@ -1,795 +1,777 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sClicker - The best Autoclicker for Windows</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sClicker V5 — Chrome Edition</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-    @font-face {
-      font-family: 'gg sans';
-      src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Normal.woff2') format('woff2');
-      font-weight: 400;
-    }
-    @font-face {
-      font-family: 'gg sans';
-      src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Medium.woff2') format('woff2');
-      font-weight: 500;
-    }
-    @font-face {
-      font-family: 'gg sans';
-      src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Semibold.woff2') format('woff2');
-      font-weight: 600;
-    }
-    @font-face {
-      font-family: 'gg sans';
-      src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Bold.woff2') format('woff2');
-      font-weight: 700;
-    }
-    @font-face {
-      font-family: 'gg sans';
-      src: url('https://cdn.jsdelivr.net/gh/discordapp/discord-branding@master/fonts/ggsans-Extrabold.woff2') format('woff2');
-      font-weight: 800;
-    }
+  :root{
+    --bg:#08080c;
+    --surface:#111118;
+    --surface-alt:#17171f;
+    --border:rgba(255,255,255,.10);
+    --border-strong:rgba(255,255,255,.20);
+    --text:#f2f2f7;
+    --text-soft:#9b9ba8;
+    --text-dim:#63636f;
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    --c1:#33e0ff;
+    --c2:#a06bff;
+    --c3:#ff5fd8;
+    --c4:#ffd23f;
+    --c5:#5cffb0;
 
-    :root {
-      --purple-primary: #a855f7;
-      --purple-dark: #7e22ce;
-      --purple-light: #c084fc;
-      --bg-dark: #0d0d0d;
-      --bg-card: #1a1a1a;
-      --text-primary: #ffffff;
-      --text-secondary: #a3a3a3;
-      --gold-primary: #f59e0b;
-      --gold-dark: #d97706;
-      --green-accent: #22c55e;
-    }
+    --chrome-grad: linear-gradient(100deg, var(--c1) 0%, var(--c2) 25%, var(--c3) 50%, var(--c4) 75%, var(--c5) 100%);
 
-    body {
-      font-family: 'gg sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-primary);
-      overflow-x: hidden;
-    }
+    --radius-sm:10px;
+    --radius-md:18px;
+    --radius-lg:30px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',-apple-system,'Segoe UI',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.55;
+    position:relative;
+  }
+  a{color:inherit;}
+  ul{list-style:none;}
+  img{display:block;max-width:100%;}
+  h1,h2,h3{ font-family:'Space Grotesk',sans-serif; }
 
-    /* Background */
-    .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.15; }
-    .bg-animation::before { content: ''; position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, var(--purple-primary) 0%, transparent 70%); top: -250px; right: -200px; animation: float 20s ease-in-out infinite; }
-    .bg-animation::after { content: ''; position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, var(--purple-dark) 0%, transparent 70%); bottom: -150px; left: -150px; animation: float 15s ease-in-out infinite reverse; }
-    @keyframes float { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(50px,50px) scale(1.1); } }
+  .ambient{ position:fixed; inset:0; z-index:-2; overflow:hidden; background:var(--bg); }
+  .ambient::before, .ambient::after{
+    content:''; position:absolute; width:70vw; height:70vw; border-radius:50%;
+    filter:blur(110px); opacity:.28; mix-blend-mode:screen;
+  }
+  .ambient::before{
+    background:conic-gradient(from 0deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c1));
+    top:-30vw; left:-20vw; animation:drift1 26s ease-in-out infinite;
+  }
+  .ambient::after{
+    background:conic-gradient(from 180deg, var(--c5), var(--c4), var(--c3), var(--c2), var(--c1), var(--c5));
+    bottom:-35vw; right:-25vw; animation:drift2 32s ease-in-out infinite;
+  }
+  @keyframes drift1{ 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(6vw,4vw) scale(1.15);} }
+  @keyframes drift2{ 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-5vw,-6vw) scale(1.1);} }
+  @media (prefers-reduced-motion: reduce){ .ambient::before,.ambient::after{ animation:none; } }
 
-    /* Nav */
-    nav { padding: 2rem 0; position: sticky; top: 0; background: rgba(13,13,13,0.85); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid rgba(168,85,247,0.1); }
-    .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, var(--purple-primary), var(--purple-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; }
-    .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--purple-primary); transition: width 0.3s; }
-    .nav-links a:hover { color: var(--text-primary); }
-    .nav-links a:hover::after { width: 100%; }
+  .chrome-text{
+    background:var(--chrome-grad); background-size:220% 100%;
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
+    animation:shift 8s ease-in-out infinite;
+  }
+  @keyframes shift{ 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
 
-    /* Hero */
-    .hero { max-width: 1400px; margin: 0 auto; padding: 8rem 2rem 6rem; }
-    .hero-content { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; }
-    .hero-text h1 { font-size: 6.5rem; font-weight: 800; line-height: 1.05; margin-bottom: 1.5rem; background: linear-gradient(135deg, #ffffff 0%, var(--purple-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-text .highlight { display: block; color: var(--purple-primary); -webkit-text-fill-color: var(--purple-primary); filter: drop-shadow(0 0 8px rgba(168,85,247,0.8)) drop-shadow(0 0 16px rgba(168,85,247,0.6)); }
-    .hero-text p { font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 2.5rem; line-height: 1.7; }
-    .hero-buttons { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-    .warning-text { color: var(--text-secondary); margin-top: 1rem; font-size: 0.95rem; }
+  .chrome-border{ position:relative; border-radius:var(--radius-md); background:var(--surface); }
+  .chrome-border::before{
+    content:''; position:absolute; inset:0; border-radius:inherit; padding:1.5px;
+    background:var(--chrome-grad); background-size:220% 100%;
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+    animation:shift 8s ease-in-out infinite; pointer-events:none;
+  }
 
-    /* Buttons */
-    .btn { padding: 1.2rem 3rem; border-radius: 16px; font-weight: 700; font-size: 1.15rem; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; font-family: inherit; }
-    .btn-primary { background: linear-gradient(90deg, #a855f7 0%, #c084fc 25%, #d946ef 75%, #e879f9 100%); color: white; box-shadow: 0 0 20px rgba(168,85,247,0.5); position: relative; overflow: hidden; }
-    .btn-primary::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: left 0.5s; }
-    .btn-primary:hover::before { left: 100%; }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(168,85,247,0.8); }
-    .btn-secondary { background: transparent; color: var(--text-primary); border: 2.5px solid var(--purple-primary); }
-    .btn-secondary:hover { background: rgba(168,85,247,0.1); transform: translateY(-3px); }
+  nav{ position:sticky; top:0; z-index:100; background:rgba(8,8,12,.72); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); }
+  .nav-container{ max-width:1280px; margin:0 auto; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; }
+  .logo-group{display:flex;align-items:center;gap:.8rem;}
+  .logo-mark{ width:36px;height:36px;border-radius:10px; background:var(--chrome-grad); background-size:220% 100%; animation:shift 8s ease-in-out infinite; flex-shrink:0; box-shadow:0 0 22px rgba(160,107,255,.35); }
+  .logo{font-size:1.35rem;font-weight:700;letter-spacing:-.01em;}
+  .version-chip{ font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:500; background:var(--surface-alt);color:var(--text-soft); border:1px solid var(--border);border-radius:999px;padding:3px 10px; }
+  .nav-links{display:flex;gap:2.2rem;align-items:center;}
+  .nav-links a{ color:var(--text-soft);text-decoration:none;font-weight:500;font-size:.92rem; transition:.2s; }
+  .nav-links a:hover{color:var(--text);}
 
-    /* NEW VERSION badge wrapper */
-    .btn-badge-wrap { position: relative; display: inline-block; }
-    .new-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: #16a34a; color: #fff; font-size: 11px; font-weight: 700; padding: 2px 12px; border-radius: 999px; white-space: nowrap; border: 2px solid var(--bg-dark); letter-spacing: 0.5px; z-index: 1; }
-    .btn-green-stroke { border: 2.5px solid #22c55e !important; box-shadow: 0 0 0 3px rgba(34,197,94,0.2), 0 0 20px rgba(168,85,247,0.5) !important; }
+  .btn{ font-family:inherit;font-weight:600;font-size:.95rem; padding:.9rem 1.7rem;border-radius:var(--radius-sm);border:none;cursor:pointer; display:inline-flex;align-items:center;justify-content:center;gap:.55rem; transition:transform .15s, box-shadow .2s, opacity .2s; text-decoration:none; }
+  .btn-chrome{ color:#08080c; background:var(--chrome-grad); background-size:220% 100%; animation:shift 8s ease-in-out infinite; box-shadow:0 4px 24px rgba(160,107,255,.30); }
+  .btn-chrome:hover{ transform:translateY(-2px); box-shadow:0 8px 32px rgba(160,107,255,.45); }
+  .btn-outline{ background:transparent; color:var(--text); border:1px solid var(--border-strong); }
+  .btn-outline:hover{ background:var(--surface-alt); border-color:var(--text-soft); }
+  .btn-disabled{ background:var(--surface-alt); color:var(--text-dim); cursor:not-allowed; border:1px solid var(--border); }
+  .btn-disabled .soon{ font-size:.65rem; font-weight:700; letter-spacing:.05em; background:rgba(255,255,255,.06); color:var(--text-dim); border:1px solid var(--border); border-radius:999px; padding:1px 8px; margin-left:4px; }
+  .os-icon{width:18px;height:18px;flex-shrink:0;}
+  .download-row{ display:flex; gap:.9rem; flex-wrap:wrap; align-items:stretch; }
+  .download-row .btn{ flex:1 1 200px; min-width:190px; }
 
-    /* Hero visual */
-    .hero-visual { position: relative; }
-    .click-demo { background: linear-gradient(135deg, var(--bg-card), #252525); border-radius: 24px; padding: 3rem; border: 1px solid rgba(168,85,247,0.2); position: relative; overflow: hidden; }
-    .click-demo::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%; background: linear-gradient(135deg, rgba(168,85,247,0.1), transparent); pointer-events: none; }
-    .demo-screen { background: #0a0a0a; border-radius: 16px; padding: 2rem; min-height: 300px; display: flex; flex-direction: column; gap: 1.5rem; }
-    .demo-control { background: rgba(168,85,247,0.1); border: 2px solid var(--purple-primary); border-radius: 12px; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-    .demo-control span { font-weight: 600; color: var(--purple-light); }
-    .demo-toggle { width: 60px; height: 30px; background: var(--purple-primary); border-radius: 15px; position: relative; }
-    .demo-toggle::after { content: ''; position: absolute; width: 24px; height: 24px; background: white; border-radius: 50%; top: 3px; left: 3px; }
-    .demo-clicks { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
-    .click-indicator { aspect-ratio: 1; background: linear-gradient(135deg, #2a2a3a, #1a1a2a); border: 2px solid var(--purple-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 700; color: var(--purple-light); animation: keyPress 1.2s ease-in-out infinite; }
-    .click-indicator:nth-child(1){animation-delay:0s} .click-indicator:nth-child(2){animation-delay:0.3s} .click-indicator:nth-child(3){animation-delay:0.6s} .click-indicator:nth-child(4){animation-delay:0.9s} .click-indicator:nth-child(5){animation-delay:1.2s} .click-indicator:nth-child(6){animation-delay:1.5s}
-    @keyframes keyPress { 0%,90%,100%{transform:translateY(0);background:linear-gradient(135deg,#2a2a3a,#1a1a2a)} 50%{transform:translateY(8px);background:linear-gradient(135deg,var(--purple-primary),var(--purple-dark))} }
+  .hero{ max-width:1280px; margin:0 auto; padding:5rem 2rem 5rem; }
+  .beta-banner{ display:inline-flex; align-items:center; gap:.5rem; background:var(--surface-alt); border:1px solid var(--border-strong); color:var(--text-soft); font-size:.85rem; font-weight:500; padding:.5rem 1.1rem; border-radius:999px; margin-bottom:1.7rem; }
+  .beta-banner strong{ font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--text); }
+  .hero-grid{ display:grid; grid-template-columns:1.15fr .85fr; gap:4rem; align-items:center; }
+  .hero-text h1{ font-size:4rem; font-weight:700; letter-spacing:-.03em; line-height:1.06; margin-bottom:1.4rem; }
+  .hero-text p.lead{ font-size:1.2rem; color:var(--text-soft); margin-bottom:2.2rem; max-width:520px; }
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem; }
+  .why-link{ font-size:.9rem; color:var(--text-soft); }
+  .why-link a{ color:var(--c1); text-decoration:none; font-weight:500; }
+  .why-link a:hover{ text-decoration:underline; }
 
-    /* Stats */
-    .stats { max-width: 1400px; margin: 4rem auto; padding: 0 2rem; }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 2rem; }
-    .stat-card { background: var(--bg-card); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(168,85,247,0.1); text-align: center; transition: all 0.3s; }
-    .stat-card:hover { transform: translateY(-5px); border-color: var(--purple-primary); }
-    .stat-number { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, var(--purple-primary), var(--purple-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
-    .stat-label { color: var(--text-secondary); font-size: 1.1rem; font-weight: 500; }
+  .hero-visual{ padding:2px; }
+  .device{ background:var(--surface); border-radius:calc(var(--radius-lg) - 2px); padding:2.2rem; overflow:hidden; position:relative; }
+  .device-topbar{ display:flex; align-items:center; gap:.5rem; margin-bottom:1.5rem; }
+  .dot{width:11px;height:11px;border-radius:50%;}
+  .dot.c1{background:var(--c1);} .dot.c3{background:var(--c3);} .dot.c4{background:var(--c4);}
+  .control-row{ display:flex; justify-content:space-between; align-items:center; background:var(--surface-alt); border:1px solid var(--border-strong); border-radius:var(--radius-sm); padding:1rem 1.2rem; margin-bottom:1.3rem; }
+  .control-row span{ font-weight:600; font-size:.95rem; }
+  .toggle{ width:44px; height:24px; border-radius:14px; position:relative; background:var(--chrome-grad); background-size:220% 100%; animation:shift 8s ease-in-out infinite; }
+  .toggle::after{ content:''; position:absolute; width:18px; height:18px; background:#08080c; border-radius:50%; top:3px; left:22px; }
+  .key-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:.8rem; }
+  .key{ aspect-ratio:1; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.3rem; color:#08080c; animation:press 1.2s ease-in-out infinite; }
+  .key:nth-child(1){background:var(--c1); animation-delay:0s;}
+  .key:nth-child(2){background:var(--c2); animation-delay:.2s;}
+  .key:nth-child(3){background:var(--c3); animation-delay:.4s;}
+  .key:nth-child(4){background:var(--c4); animation-delay:.6s;}
+  .key:nth-child(5){background:var(--c5); animation-delay:.8s;}
+  .key:nth-child(6){background:var(--c1); animation-delay:1s;}
+  @keyframes press{ 0%,90%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(.9);opacity:.75;} }
 
-    /* Features */
-    .features { max-width: 1400px; margin: 8rem auto; padding: 0 2rem; }
-    .section-header { text-align: center; margin-bottom: 5rem; }
-    .section-header h2 { font-size: 4.5rem; font-weight: 800; margin-bottom: 1rem; }
-    .section-header p { font-size: 1.4rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
-    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); gap: 2rem; }
-    .feature-card { background: var(--bg-card); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(168,85,247,0.1); transition: all 0.3s; position: relative; overflow: hidden; }
-    .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--purple-primary), var(--purple-light)); transform: scaleX(0); transition: transform 0.3s; }
-    .feature-card:hover::before { transform: scaleX(1); }
-    .feature-card:hover { transform: translateY(-8px); border-color: var(--purple-primary); }
-    .feature-card.premium-card { border-color: rgba(245,158,11,0.3); }
-    .feature-card.premium-card::before { background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary)); }
-    .feature-card.premium-card:hover { border-color: var(--gold-primary); }
-    .feature-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark)); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 1.5rem; }
-    .feature-card.premium-card .feature-icon { background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary)); }
-    .feature-card h3 { font-size: 1.8rem; margin-bottom: 1rem; font-weight: 700; }
-    .feature-card p { color: var(--text-secondary); line-height: 1.8; font-size: 1.15rem; }
-    .premium-tag { display: inline-block; background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary)); color: #000; font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-left: 0.5rem; vertical-align: middle; }
+  .stats{ max-width:1280px; margin:0 auto; padding:0 2rem 6rem; }
+  .stats-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.3rem; }
+  .stat-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:2rem; text-align:center; }
+  .stat-number{ font-family:'Space Grotesk',sans-serif; font-size:2.4rem; font-weight:700; margin-bottom:.3rem; }
+  .stat-label{ color:var(--text-soft); font-size:1rem; }
 
-    /* Themes preview */
-    .themes-section { max-width: 1400px; margin: 8rem auto; padding: 0 2rem; }
-    .themes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr)); gap: 1rem; margin-top: 3rem; }
-    .theme-dot { border-radius: 16px; padding: 1.5rem 1rem; text-align: center; font-weight: 600; font-size: 0.95rem; border: 2px solid transparent; transition: all 0.3s; cursor: default; position: relative; overflow: hidden; }
-    .theme-dot:hover { transform: translateY(-4px); }
-    .theme-dot .premium-label { font-size: 0.7rem; font-weight: 700; opacity: 0.8; display: block; margin-top: 4px; }
-    .t-purple { background: rgba(168,85,247,0.15); border-color: #a855f7; color: #c084fc; }
-    .t-blue   { background: rgba(59,130,246,0.15); border-color: #3b82f6; color: #93c5fd; }
-    .t-green  { background: rgba(34,197,94,0.15);  border-color: #22c55e; color: #86efac; }
-    .t-red    { background: rgba(239,68,68,0.15);   border-color: #ef4444; color: #fca5a5; }
-    .t-gold   { background: rgba(245,158,11,0.15);  border-color: #f59e0b; color: #fcd34d; }
-    .t-cyan   { background: rgba(6,182,212,0.15);   border-color: #06b6d4; color: #67e8f9; }
-    .t-pink   { background: rgba(236,72,153,0.15);  border-color: #ec4899; color: #f9a8d4; }
-    .t-orange { background: rgba(249,115,22,0.15);  border-color: #f97316; color: #fdba74; }
-    .t-black  { background: rgba(255,255,255,0.05); border-color: #555; color: #aaa; }
-    .t-white  { background: rgba(255,255,255,0.1);  border-color: #ccc; color: #fff; }
+  .section-header{ text-align:center; margin-bottom:3.2rem; }
+  .section-header .eyebrow{ display:inline-flex; align-items:center; gap:.5rem; font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:.8rem; }
+  .eyebrow-dot{ width:6px;height:6px;border-radius:50%; background:var(--chrome-grad); background-size:220% 100%; animation:shift 8s ease-in-out infinite; }
+  .section-header h2{ font-size:2.7rem; font-weight:700; letter-spacing:-.02em; margin-bottom:.6rem; }
+  .section-header p{ color:var(--text-soft); font-size:1.1rem; max-width:560px; margin:0 auto; }
 
-    /* How it works */
-    .how-it-works { max-width: 1200px; margin: 8rem auto; padding: 0 2rem; }
-    .steps { margin-top: 4rem; }
-    .step { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 6rem; align-items: center; }
-    .step:nth-child(even) { direction: rtl; }
-    .step:nth-child(even) > * { direction: ltr; }
-    .step-content { position: relative; }
-    .step-number { font-size: 6rem; font-weight: 800; color: rgba(168,85,247,0.1); position: absolute; top: -2rem; left: -1rem; z-index: -1; }
-    .step-content h3 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700; }
-    .step-content p { color: var(--text-secondary); line-height: 1.9; font-size: 1.2rem; }
-    .step-visual { background: linear-gradient(135deg, var(--bg-card), #252525); border-radius: 20px; padding: 2rem; border: 1px solid rgba(168,85,247,0.2); min-height: 250px; display: flex; align-items: center; justify-content: center; }
-    .step-icon { font-weight: 700; font-size: 1.5rem; color: var(--purple-light); background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark)); padding: 1.5rem 2.5rem; border-radius: 12px; letter-spacing: 2px; }
+  .features{ max-width:1280px; margin:0 auto; padding:6rem 2rem; }
+  .features-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; }
+  .feature-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:2rem; transition:border-color .2s, transform .2s; }
+  .feature-card:hover{ border-color:var(--border-strong); transform:translateY(-4px); }
+  .feature-icon{ width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:1.2rem; background:var(--chrome-grad); background-size:220% 100%; animation:shift 8s ease-in-out infinite; }
+  .feature-card h3{ font-size:1.25rem; font-weight:700; margin-bottom:.6rem; }
+  .feature-card p{ color:var(--text-soft); font-size:.98rem; line-height:1.7; }
+  .tag{ display:inline-block; font-size:.65rem; font-weight:700; letter-spacing:.03em; padding:2px 9px; border-radius:999px; margin-left:.5rem; vertical-align:middle; background:var(--surface-alt); border:1px solid var(--border-strong); color:var(--text-soft); }
 
-    /* Social */
-    .social-proof { max-width: 1400px; margin: 8rem auto; padding: 0 2rem; }
-    .social-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem; }
-    .social-card { background: var(--bg-card); padding: 2rem 3rem; border-radius: 16px; border: 1px solid rgba(168,85,247,0.1); display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text-primary); transition: all 0.3s; font-weight: 600; font-size: 1.1rem; }
-    .social-card:hover { transform: translateY(-5px); border-color: var(--purple-primary); }
-    .social-icon { width: 32px; height: 32px; }
+  .themes-section{ max-width:1280px; margin:0 auto; padding:6rem 2rem; background:var(--surface); border-radius:var(--radius-lg); border:1px solid var(--border); }
+  .themes-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:1rem; margin-top:2.6rem; }
+  .theme-dot{ background:var(--surface-alt); border:1px solid var(--border); border-radius:var(--radius-sm); padding:1.3rem 1rem; text-align:center; font-weight:500; font-size:.9rem; transition:.2s; position:relative; }
+  .theme-dot:hover{ transform:translateY(-3px); border-color:var(--border-strong); }
+  .swatch{ width:28px; height:28px; border-radius:50%; margin:0 auto .6rem; }
+  .sw-cyan{background:var(--c1);} .sw-violet{background:var(--c2);} .sw-magenta{background:var(--c3);}
+  .sw-gold{background:var(--c4);} .sw-mint{background:var(--c5);}
+  .sw-slate{background:#7b8794;} .sw-rose{background:#ff7aa8;} .sw-amber{background:#ffb020;}
+  .sw-onyx{background:#1c1c24; border:1px solid var(--border-strong);} .sw-pearl{background:#e9e9f2;}
+  .lock-label{ display:block; font-size:.68rem; color:var(--text-dim); margin-top:.3rem; }
 
-    /* CTA */
-    .cta-section { max-width: 1200px; margin: 8rem auto 6rem; padding: 0 2rem; }
-    .cta-box { background: linear-gradient(135deg, var(--purple-dark), var(--purple-primary)); padding: 5rem 3rem; border-radius: 30px; text-align: center; position: relative; overflow: hidden; }
-    .cta-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 20s linear infinite; }
-    @keyframes rotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-    .cta-box h2 { font-size: 4rem; font-weight: 800; margin-bottom: 1.5rem; position: relative; z-index: 1; }
-    .cta-box p { font-size: 1.5rem; margin-bottom: 2.5rem; opacity: 0.9; position: relative; z-index: 1; }
-    .cta-box .btn { background: white; color: var(--purple-dark); position: relative; z-index: 1; }
-    .cta-box .btn:hover { background: #f5f5f5; }
+  .how-it-works{ max-width:1100px; margin:6rem auto; padding:0 2rem; }
+  .steps{ margin-top:3rem; }
+  .step{ display:grid; grid-template-columns:1fr 1fr; gap:3rem; margin-bottom:4rem; align-items:center; }
+  .step-badge{ display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; color:#08080c; font-weight:700; font-size:.95rem; margin-bottom:1rem; background:var(--chrome-grad); background-size:220% 100%; animation:shift 8s ease-in-out infinite; }
+  .step-content h3{ font-size:1.7rem; font-weight:700; margin-bottom:.7rem; }
+  .step-content p{ color:var(--text-soft); font-size:1.05rem; line-height:1.8; }
+  .step-visual{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); min-height:180px; display:flex; align-items:center; justify-content:center; }
+  .step-visual span{ font-weight:700; letter-spacing:.1em; font-size:1.05rem; font-family:'JetBrains Mono',monospace; color:var(--text); border:1px solid var(--border-strong); padding:1rem 2rem; border-radius:var(--radius-sm); }
 
-    /* Rating */
-    .rating-section { max-width: 1200px; margin: 6rem auto 6rem; padding: 0 2rem; }
-    .rating-box { background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary)); padding: 5rem 3rem; border-radius: 30px; text-align: center; position: relative; overflow: hidden; }
-    .rating-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%); animation: rotate 20s linear infinite; }
-    .rating-box::after { content: ''; position: absolute; top: -30%; right: -30%; width: 150%; height: 150%; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%); animation: rotate 15s linear infinite reverse; }
-    .rating-box h2 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; position: relative; z-index: 1; color: white; }
-    .rating-box > p { font-size: 1.3rem; margin-bottom: 2.5rem; opacity: 0.9; position: relative; z-index: 1; color: white; }
-    .star-rating { display: flex; justify-content: center; gap: 1rem; margin: 2rem 0; position: relative; z-index: 1; }
-    .star { font-size: 3.5rem; cursor: pointer; color: rgba(255,255,255,0.3); transition: all 0.3s; }
-    .star:hover, .star.active { color: #fff; transform: scale(1.2); filter: drop-shadow(0 0 10px rgba(255,255,255,0.8)); }
-    .rating-form { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
-    .rating-form input[type="email"] { width: 100%; padding: 1.2rem; border-radius: 16px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.95); color: #0d0d0d; font-size: 1.1rem; font-family: inherit; margin-bottom: 1rem; transition: all 0.3s; }
-    .rating-form input[type="email"]:focus { outline: none; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.5); }
-    .rating-form textarea { width: 100%; padding: 1.5rem; border-radius: 16px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.95); color: #0d0d0d; font-size: 1.1rem; font-family: inherit; resize: vertical; min-height: 150px; margin-bottom: 1.5rem; transition: all 0.3s; }
-    .rating-form textarea:focus { outline: none; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.5); }
-    .submit-rating { width: 100%; padding: 1.5rem 3rem; background: white; color: var(--gold-dark); border: none; border-radius: 16px; font-weight: 700; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; font-family: inherit; }
-    .submit-rating:hover:not(:disabled) { transform: translateY(-3px); background: #f5f5f5; }
-    .submit-rating:disabled { opacity: 0.6; cursor: not-allowed; }
-    .rating-message { margin-top: 1rem; padding: 1rem; border-radius: 12px; font-weight: 600; display: none; }
-    .rating-message.success { background: rgba(34,197,94,0.2); color: #22c55e; border: 2px solid #22c55e; }
-    .rating-message.error { background: rgba(239,68,68,0.2); color: #ef4444; border: 2px solid #ef4444; }
+  .social-proof{ max-width:1280px; margin:6rem auto; padding:0 2rem; }
+  .social-links{ display:flex; justify-content:center; gap:1.2rem; flex-wrap:wrap; margin-top:2.6rem; }
+  .social-card{ background:var(--surface); border:1px solid var(--border); padding:1.2rem 2rem; border-radius:var(--radius-sm); display:flex; align-items:center; gap:.9rem; text-decoration:none; color:var(--text); font-weight:500; transition:.2s; }
+  .social-card:hover{ border-color:var(--border-strong); transform:translateY(-3px); }
+  .social-icon{ width:24px; height:24px; }
 
-    /* Modals */
-    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); animation: fadeIn 0.3s; }
-    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-    .modal-content { background: linear-gradient(135deg, var(--bg-card), #252525); margin: 5% auto; padding: 2.5rem; border: 1px solid rgba(168,85,247,0.2); border-radius: 24px; width: 90%; max-width: 700px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.8); animation: slideIn 0.3s ease-out; }
-    @keyframes slideIn { from{transform:translateY(-50px);opacity:0} to{transform:translateY(0);opacity:1} }
-    .close-modal { color: var(--text-secondary); float: right; font-size: 2rem; font-weight: bold; cursor: pointer; transition: color 0.3s; line-height: 1; }
-    .close-modal:hover { color: var(--text-primary); }
-    .modal h2 { font-size: 2.5rem; margin-top: 1rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--purple-primary), var(--purple-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .modal-section { margin-bottom: 2rem; }
-    .modal-section h3 { font-size: 1.3rem; color: var(--purple-light); margin-bottom: 0.8rem; font-weight: 700; }
-    .modal-section p { color: var(--text-secondary); line-height: 1.8; font-size: 1rem; }
-    .warning-box { background: rgba(168,85,247,0.1); border-left: 4px solid var(--purple-primary); padding: 1.5rem; margin: 1.5rem 0; border-radius: 8px; }
-    .warning-box strong { color: var(--purple-light); }
-    .more-info-button { display: inline-block; margin-top: 1rem; padding: 0.7rem 1.5rem; background: rgba(168,85,247,0.2); color: var(--purple-light); border: 1px solid var(--purple-light); border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.95rem; }
-    .more-info-button:hover { background: rgba(168,85,247,0.4); transform: translateX(5px); }
-    .modal-button { width: 100%; padding: 1.2rem 2rem; margin-top: 2rem; background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark)); color: white; border: none; border-radius: 12px; font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: all 0.3s; font-family: inherit; }
-    .modal-button:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(168,85,247,0.5); }
-    .terms-checkbox { display: flex; align-items: center; gap: 1rem; margin: 2rem 0; padding: 1.5rem; background: rgba(168,85,247,0.05); border: 1px solid rgba(168,85,247,0.2); border-radius: 12px; }
-    .terms-checkbox input[type="checkbox"] { width: 24px; height: 24px; cursor: pointer; accent-color: var(--purple-primary); flex-shrink: 0; }
-    .terms-checkbox label { cursor: pointer; color: var(--text-secondary); font-weight: 500; margin: 0; }
-    #downloadButton { width: 100%; padding: 1.2rem 2rem; margin-top: 1rem; background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark)); color: white; border: 2px solid #ffffff; border-radius: 12px; font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 0 20px rgba(255,255,255,0.5); position: relative; overflow: hidden; font-family: inherit; }
-    #downloadButton:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 0 30px rgba(255,255,255,0.8); }
-    #downloadButton:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+  .cta-section{ max-width:1100px; margin:6rem auto; padding:0 2rem; }
+  .cta-box{ padding:4rem 2.5rem; border-radius:var(--radius-lg); text-align:center; color:#08080c; background:var(--chrome-grad); background-size:220% 100%; animation:shift 8s ease-in-out infinite; box-shadow:0 20px 60px rgba(160,107,255,.25); }
+  .cta-box h2{ font-size:2.6rem; font-weight:700; margin-bottom:1rem; }
+  .cta-box p{ font-size:1.15rem; opacity:.85; margin-bottom:2.2rem; }
+  .cta-box .download-row{ justify-content:center; max-width:720px; margin:0 auto; }
+  .cta-box .btn-chrome{ background:#08080c; color:#fff; animation:none; box-shadow:0 4px 20px rgba(0,0,0,.3); }
+  .cta-box .btn-chrome:hover{ background:#1a1a22; }
+  .cta-box .btn-disabled{ background:rgba(8,8,12,.15); color:rgba(8,8,12,.65); border-color:rgba(8,8,12,.25); }
+  .cta-box .btn-disabled .soon{ background:rgba(8,8,12,.15); color:rgba(8,8,12,.75); border-color:transparent; }
 
-    /* Footer */
-    footer { border-top: 1px solid rgba(168,85,247,0.1); padding: 3rem 2rem; text-align: center; color: var(--text-secondary); }
-    footer a { color: var(--purple-light); text-decoration: none; transition: color 0.3s; }
-    footer a:hover { color: var(--text-primary); }
+  .rating-section{ max-width:1100px; margin:6rem auto; padding:0 2rem; }
+  .rating-box{ background:var(--surface); border:1px solid var(--border); padding:4rem 2.5rem; border-radius:var(--radius-lg); text-align:center; }
+  .rating-box h2{ font-size:2.2rem; font-weight:700; margin-bottom:.6rem; }
+  .rating-box > p{ color:var(--text-soft); font-size:1.05rem; margin-bottom:2rem; }
+  .star-rating{ display:flex; justify-content:center; gap:.6rem; margin:1.5rem 0; flex-wrap:wrap; }
+  .star{ font-size:2.2rem; cursor:pointer; color:var(--border-strong); transition:.2s; }
+  .star:hover, .star.active{ color:var(--c4); transform:scale(1.15); }
+  .rating-form{ max-width:520px; margin:0 auto; }
+  .rating-form input[type="email"], .rating-form textarea{ width:100%; padding:1rem 1.1rem; border-radius:var(--radius-sm); border:1px solid var(--border-strong); background:var(--surface-alt); color:var(--text); font-size:1rem; font-family:inherit; margin-bottom:1rem; transition:.2s; }
+  .rating-form input[type="email"]::placeholder, .rating-form textarea::placeholder{ color:var(--text-dim); }
+  .rating-form input[type="email"]:focus, .rating-form textarea:focus{ outline:none; border-color:var(--c1); box-shadow:0 0 0 3px rgba(51,224,255,.15); }
+  .rating-form textarea{ resize:vertical; min-height:120px; }
+  .submit-rating{ width:100%; padding:1rem 2rem; color:#08080c; border:none; border-radius:var(--radius-sm); font-weight:700; font-size:1.05rem; cursor:pointer; transition:.2s; font-family:inherit; background:var(--chrome-grad); background-size:220% 100%; animation:shift 8s ease-in-out infinite; }
+  .submit-rating:hover:not(:disabled){ transform:translateY(-2px); }
+  .submit-rating:disabled{ background:var(--surface-alt); color:var(--text-dim); cursor:not-allowed; animation:none; transform:none; }
+  .rating-message{ margin-top:1rem; padding:.9rem; border-radius:var(--radius-sm); font-weight:500; display:none; }
+  .rating-message.success{ background:rgba(92,255,176,.1); color:var(--c5); border:1px solid rgba(92,255,176,.4); }
+  .rating-message.error{ background:rgba(255,95,216,.1); color:var(--c3); border:1px solid rgba(255,95,216,.4); }
 
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .hero-content { grid-template-columns: 1fr; gap: 3rem; }
-      .hero-text h1 { font-size: 3.5rem; }
-      .step { grid-template-columns: 1fr; gap: 2rem; }
-      .step:nth-child(even) { direction: ltr; }
-    }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hero-text h1 { font-size: 2.5rem; }
-      .section-header h2 { font-size: 2.5rem; }
-      .features-grid { grid-template-columns: 1fr; }
-      .cta-box { padding: 3rem 2rem; }
-      .cta-box h2 { font-size: 2rem; }
-      .rating-box { padding: 3rem 2rem; }
-      .rating-box h2 { font-size: 2rem; }
-      .star { font-size: 2.5rem; }
-      .modal-content { width: 95%; margin: 20% auto; padding: 1.5rem; }
-      .modal h2 { font-size: 1.8rem; }
-      .themes-grid { grid-template-columns: repeat(3,1fr); }
-    }
-  </style>
+  .modal{ display:none; position:fixed; z-index:1000; inset:0; background:rgba(0,0,0,.7); backdrop-filter:blur(4px); animation:fadeIn .2s; }
+  @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+  .modal-content{ background:var(--surface); margin:4% auto; padding:2.4rem; border-radius:var(--radius-lg); width:90%; max-width:680px; max-height:82vh; overflow-y:auto; border:1px solid var(--border-strong); animation:slideIn .25s ease-out; }
+  @keyframes slideIn{ from{transform:translateY(-30px);opacity:0;} to{transform:translateY(0);opacity:1;} }
+  .close-modal{ color:var(--text-soft); float:right; font-size:1.7rem; cursor:pointer; line-height:1; }
+  .close-modal:hover{ color:var(--text); }
+  .modal h2{ font-size:1.9rem; margin:.8rem 0 1.3rem; font-weight:700; }
+  .modal-section{ margin-bottom:1.6rem; }
+  .modal-section h3{ font-size:1.05rem; color:var(--c1); margin-bottom:.6rem; font-weight:700; }
+  .modal-section p, .modal-section li{ color:var(--text-soft); line-height:1.8; font-size:.98rem; }
+  .modal-section ul, .modal-section ol{ margin-left:1.2rem; margin-top:.5rem; }
+  .warning-box{ background:var(--surface-alt); border-left:3px solid var(--c2); padding:1.2rem; margin:1.2rem 0; border-radius:var(--radius-sm); }
+  .warning-box strong{ color:var(--text); }
+  .more-info-button{ display:inline-block; margin-top:.8rem; padding:.6rem 1.3rem; background:transparent; color:var(--c1); border:1px solid var(--border-strong); border-radius:var(--radius-sm); font-weight:500; cursor:pointer; transition:.2s; font-size:.9rem; }
+  .more-info-button:hover{ background:var(--surface-alt); }
+  .modal-button{ width:100%; padding:1rem 2rem; margin-top:1.6rem; color:#08080c; border:none; border-radius:var(--radius-sm); font-weight:700; font-size:1rem; cursor:pointer; transition:.2s; font-family:inherit; background:var(--chrome-grad); background-size:220% 100%; animation:shift 8s ease-in-out infinite; }
+  .modal-button:hover{ transform:translateY(-2px); }
+  .terms-checkbox{ display:flex; align-items:center; gap:.9rem; margin:1.6rem 0; padding:1.2rem; background:var(--surface-alt); border:1px solid var(--border); border-radius:var(--radius-sm); }
+  .terms-checkbox input[type="checkbox"]{ width:22px; height:22px; cursor:pointer; accent-color:var(--c2); flex-shrink:0; }
+  .terms-checkbox label{ cursor:pointer; color:var(--text-soft); font-weight:500; }
+  #downloadButton{ width:100%; padding:1rem 2rem; margin-top:.8rem; color:#08080c; border:none; border-radius:var(--radius-sm); font-weight:700; font-size:1rem; cursor:pointer; transition:.2s; font-family:inherit; background:var(--chrome-grad); background-size:220% 100%; animation:shift 8s ease-in-out infinite; }
+  #downloadButton:hover:not(:disabled){ transform:translateY(-2px); }
+  #downloadButton:disabled{ background:var(--surface-alt); color:var(--text-dim); cursor:not-allowed; animation:none; transform:none; }
+
+  footer{ border-top:1px solid var(--border); padding:2.6rem 2rem; text-align:center; color:var(--text-soft); font-size:.9rem; }
+  footer a{ color:var(--c1); text-decoration:none; }
+  footer a:hover{ text-decoration:underline; }
+
+  @media (max-width:1024px){
+    .hero-grid{ grid-template-columns:1fr; gap:2.5rem; }
+    .hero-text h1{ font-size:2.8rem; }
+    .step{ grid-template-columns:1fr; gap:1.6rem; }
+  }
+  @media (max-width:768px){
+    .nav-links{ display:none; }
+    .hero-text h1{ font-size:2.1rem; }
+    .section-header h2{ font-size:1.9rem; }
+    .features-grid{ grid-template-columns:1fr; }
+    .cta-box h2{ font-size:1.8rem; }
+    .rating-box h2{ font-size:1.7rem; }
+    .star{ font-size:1.9rem; }
+    .modal-content{ width:95%; margin:14% auto; padding:1.4rem; }
+    .download-row{ flex-direction:column; }
+    .download-row .btn{ min-width:0; }
+  }
+</style>
 </head>
 <body>
-  <div class="bg-animation"></div>
+<div class="ambient"></div>
 
-  <!-- Terms Modal -->
-  <div id="termsModal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal" onclick="closeTermsModal()">&times;</span>
-      <h2>Download Agreement &amp; Legal Notice</h2>
-      <div class="modal-section">
-        <h3>About sClicker</h3>
-        <p>sClicker is a modern, free autoclicker application for Windows. It allows you to automate repetitive clicking tasks with customizable speed settings and action sequences. By downloading and using this software, you acknowledge that you have read and understood this agreement.</p>
-      </div>
-      <div class="warning-box">
-        <strong>Important: Windows Defender SmartScreen Warning</strong>
-        <p style="margin-top:0.8rem">When you download and run sClicker, Windows may display a security warning. This is completely normal for new applications.</p>
-        <button onclick="openWarningModalFromTerms()" class="more-info-button">More on this topic &rarr;</button>
-      </div>
-      <div class="modal-section">
-        <h3>Terms of Use</h3>
-        <p>You agree to use sClicker only for lawful and ethical purposes. Misuse is prohibited, including:</p>
-        <ul style="margin-top:0.8rem;margin-left:1rem;color:var(--text-secondary)">
-          <li>Cheating in online games or gaming platforms</li>
-          <li>Unauthorized access to systems or accounts</li>
-          <li>Bypassing security measures or anti-cheat systems</li>
-          <li>Any illegal or harmful activities</li>
-        </ul>
-      </div>
-      <div class="modal-section">
-        <h3>Disclaimer</h3>
-        <p>sClicker is provided "as-is" without warranty of any kind. The developers are not responsible for any damage, data loss, account bans, or any other consequences. Use at your own risk.</p>
-      </div>
-      <div class="modal-section">
-        <h3>License &amp; Copyright</h3>
-        <p>sClicker is released under the MIT License. The full license text is available on GitHub: <strong>SNKgamesofficial/sClicker</strong></p>
-        <p style="margin-top:1rem">Copyright &copy; 2026 SnakyGames</p>
-      </div>
-      <div class="modal-section">
-        <h3>User Responsibility</h3>
-        <ul style="margin-top:0.8rem;margin-left:1rem;color:var(--text-secondary)">
-          <li>Use sClicker in compliance with all applicable laws</li>
-          <li>Do not violate terms of service of third-party applications</li>
-          <li>You accept full responsibility for any consequences</li>
-          <li>The developers are not liable for bans or damages</li>
-        </ul>
-      </div>
-      <div class="terms-checkbox">
-        <input type="checkbox" id="termsCheckbox" onchange="updateDownloadButton()">
-        <label for="termsCheckbox">I understand and accept all terms and conditions</label>
-      </div>
-      <button id="downloadButton" onclick="startDownload()" disabled>I Accept - Download sClicker</button>
+<!-- Terms Modal -->
+<div id="termsModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeTermsModal()">&times;</span>
+    <h2 class="chrome-text">Download Agreement &amp; Legal Notice</h2>
+    <div class="modal-section">
+      <h3>About sClicker</h3>
+      <p>sClicker is a modern, free autoclicker application for Windows. It allows you to automate repetitive clicking tasks with customizable speed settings and action sequences. By downloading and using this software, you acknowledge that you have read and understood this agreement.</p>
     </div>
-  </div>
-
-  <!-- Warning Modal -->
-  <div id="warningModal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal" onclick="closeWarningModal()">&times;</span>
-      <h2>Why Does Windows Show a Warning?</h2>
-      <div class="modal-section">
-        <h3>It's Not Because There's a Virus</h3>
-        <p>sClicker is 100% safe and virus-free. The Windows SmartScreen warning appears simply because sClicker is a new application that Microsoft hasn't widely recognized yet.</p>
-      </div>
-      <div class="warning-box">
-        <strong>Why you can trust sClicker:</strong>
-        <ul style="margin-top:0.5rem;margin-left:1rem;color:var(--text-secondary)">
-          <li>Source code available on GitHub</li>
-          <li>No internet connections – works completely offline</li>
-          <li>No data collection or telemetry</li>
-          <li>Open source and community-driven</li>
-        </ul>
-      </div>
-      <div class="modal-section">
-        <h3>How to Safely Install sClicker</h3>
-        <ol style="margin-top:0.8rem;margin-left:1rem;color:var(--text-secondary)">
-          <li>Click "More info" on the SmartScreen dialog</li>
-          <li>Click "Run anyway" to proceed</li>
-          <li>That's it! sClicker is now ready to use</li>
-        </ol>
-      </div>
-      <div class="warning-box">
-        <strong>Fun Fact:</strong> Many popular apps from small developers show this warning when first released. It just means the app is new to Windows' database.
-      </div>
-      <div class="modal-section">
-        <h3>Your Security is Our Priority</h3>
-        <p>sClicker requires no personal information, doesn't access your files without permission, and has no hidden features. Verify this on our GitHub repository.</p>
-      </div>
-      <button onclick="closeWarningModal()" class="modal-button">I understand</button>
+    <div class="warning-box">
+      <strong>Important: Windows Defender SmartScreen Warning</strong>
+      <p style="margin-top:0.8rem">When you download and run sClicker, Windows may display a security warning. This is completely normal for new applications.</p>
+      <button onclick="openWarningModalFromTerms()" class="more-info-button">More on this topic &rarr;</button>
     </div>
-  </div>
-
-  <!-- Nav -->
-  <nav>
-    <div class="nav-container">
-      <div class="logo">sClicker</div>
-      <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#themes">Themes</a></li>
-        <li><a href="#how">How it Works</a></li>
-        <li><a href="#download">Download</a></li>
+    <div class="modal-section">
+      <h3>Terms of Use</h3>
+      <p>You agree to use sClicker only for lawful and ethical purposes. Misuse is prohibited, including:</p>
+      <ul>
+        <li>Cheating in online games or gaming platforms</li>
+        <li>Unauthorized access to systems or accounts</li>
+        <li>Bypassing security measures or anti-cheat systems</li>
+        <li>Any illegal or harmful activities</li>
       </ul>
     </div>
-  </nav>
+    <div class="modal-section">
+      <h3>Disclaimer</h3>
+      <p>sClicker is provided "as-is" without warranty of any kind. The developers are not responsible for any damage, data loss, account bans, or any other consequences. Use at your own risk.</p>
+    </div>
+    <div class="modal-section">
+      <h3>License &amp; Copyright</h3>
+      <p>sClicker is released under the MIT License. The full license text is available on GitHub: <strong>SNKgamesofficial/sClicker</strong></p>
+      <p style="margin-top:1rem">Copyright &copy; 2026 SnakyGames</p>
+    </div>
+    <div class="modal-section">
+      <h3>User Responsibility</h3>
+      <ul>
+        <li>Use sClicker in compliance with all applicable laws</li>
+        <li>Do not violate terms of service of third-party applications</li>
+        <li>You accept full responsibility for any consequences</li>
+        <li>The developers are not liable for bans or damages</li>
+      </ul>
+    </div>
+    <div class="terms-checkbox">
+      <input type="checkbox" id="termsCheckbox" onchange="updateDownloadButton()">
+      <label for="termsCheckbox">I understand and accept all terms and conditions</label>
+    </div>
+    <button id="downloadButton" onclick="startDownload()" disabled>I Accept - Download sClicker</button>
+  </div>
+</div>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-text">
-        <h1>
-          The Fastest
-          <span class="highlight">Auto Clicker</span>
-          for Windows
-        </h1>
-        <p>Maximize your productivity with precise click sequences. Easy to use, extremely powerful, and fully customizable.</p>
-        <div class="hero-buttons">
-          <div class="btn-badge-wrap">
-            <span class="new-badge">NEW VERSION</span>
-            <button onclick="openTermsModal()" class="btn btn-primary btn-green-stroke">
-              Download for Windows (v4.0)
-            </button>
-          </div>
-          <button onclick="openWarningModal()" class="btn btn-secondary">Why the Warning?</button>
+<!-- Warning Modal -->
+<div id="warningModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeWarningModal()">&times;</span>
+    <h2 class="chrome-text">Why Does Windows Show a Warning?</h2>
+    <div class="modal-section">
+      <h3>It's Not Because There's a Virus</h3>
+      <p>sClicker is 100% safe and virus-free. The Windows SmartScreen warning appears simply because sClicker is a new application that Microsoft hasn't widely recognized yet.</p>
+    </div>
+    <div class="warning-box">
+      <strong>Why you can trust sClicker:</strong>
+      <ul style="margin-top:0.5rem">
+        <li>Source code available on GitHub</li>
+        <li>No internet connections – works completely offline</li>
+        <li>No data collection or telemetry</li>
+        <li>Open source and community-driven</li>
+      </ul>
+    </div>
+    <div class="modal-section">
+      <h3>How to Safely Install sClicker</h3>
+      <ol>
+        <li>Click "More info" on the SmartScreen dialog</li>
+        <li>Click "Run anyway" to proceed</li>
+        <li>That's it! sClicker is now ready to use</li>
+      </ol>
+    </div>
+    <div class="warning-box">
+      <strong>Fun Fact:</strong> Many popular apps from small developers show this warning when first released. It just means the app is new to Windows' database.
+    </div>
+    <div class="modal-section">
+      <h3>Your Security is Our Priority</h3>
+      <p>sClicker requires no personal information, doesn't access your files without permission, and has no hidden features. Verify this on our GitHub repository.</p>
+    </div>
+    <button onclick="closeWarningModal()" class="modal-button">I understand</button>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-container">
+    <div class="logo-group">
+      <div class="logo-mark"></div>
+      <div class="logo">sClicker</div>
+      <span class="version-chip">V5 · UNFINISHED</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#themes">Themes</a></li>
+      <li><a href="#how">How it Works</a></li>
+      <li><a href="#download">Download</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <div class="beta-banner">🚧 <strong>V5</strong> is currently in development — not finished yet</div>
+      <h1>The Fastest<br><span class="chrome-text">Auto Clicker</span><br>for Windows</h1>
+      <p class="lead">Maximize your productivity with precise click sequences. Easy to use, extremely powerful, and fully customizable.</p>
+      <div class="hero-actions">
+        <div class="download-row" style="max-width:640px">
+          <button onclick="openTermsModal()" class="btn btn-chrome">
+            <svg class="os-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+            Download for Windows
+          </button>
+          <button class="btn btn-disabled" disabled type="button" aria-disabled="true">
+            <svg class="os-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download for macOS <span class="soon">SOON</span>
+          </button>
+          <button class="btn btn-disabled" disabled type="button" aria-disabled="true">
+            <svg class="os-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12.5 2c-1.03 0-1.85.66-2.2 1.6-.42 1.11-.25 2.63-.9 3.53-.6.83-1.7 1.31-2.6 1.9-1.03.68-2.05 1.6-2.05 2.87 0 .5.18.94.44 1.32-.24.36-.39.79-.39 1.24 0 .6.26 1.14.68 1.5-.13.28-.2.6-.2.94 0 1.3 1.16 2.35 2.6 2.35.28 0 .55-.04.8-.11.36.5.94.83 1.6.83.4 0 .78-.12 1.1-.32.35.36.85.58 1.4.58.63 0 1.18-.28 1.55-.72.3.14.63.22.98.22 1.05 0 1.95-.68 2.28-1.62.2.05.4.08.62.08 1.24 0 2.24-.98 2.24-2.2 0-.4-.1-.77-.28-1.1.4-.4.65-.94.65-1.55 0-.65-.28-1.23-.72-1.63.16-.32.25-.68.25-1.06 0-1.3-1.06-2.35-2.36-2.35-.1-.9-.5-1.75-1.12-2.4-.4-1.15-1.55-1.98-2.9-1.98-.34 0-.66.05-.97.15C13.9 2.5 13.25 2 12.5 2z"/></svg>
+            Download for Linux <span class="soon">SOON</span>
+          </button>
         </div>
-        <p class="warning-text">⚠️ Free to use &middot; Premium features available after login</p>
       </div>
-      <div class="hero-visual">
-        <div class="click-demo">
-          <div class="demo-screen">
-            <div class="demo-control">
-              <span>Auto Clicking</span>
-              <div class="demo-toggle"></div>
-            </div>
-            <div class="demo-clicks">
-              <div class="click-indicator">W</div>
-              <div class="click-indicator">A</div>
-              <div class="click-indicator">S</div>
-              <div class="click-indicator">D</div>
-              <div class="click-indicator">L</div>
-              <div class="click-indicator">X</div>
-            </div>
-          </div>
+      <p class="why-link">⚠️ Free to use &middot; Premium features after login &middot; <a href="#" onclick="openWarningModal();return false;">Why the warning?</a></p>
+    </div>
+    <div class="hero-visual chrome-border">
+      <div class="device">
+        <div class="device-topbar">
+          <span class="dot c1"></span><span class="dot c3"></span><span class="dot c4"></span>
+        </div>
+        <div class="control-row">
+          <span>Auto Clicking</span>
+          <div class="toggle"></div>
+        </div>
+        <div class="key-grid">
+          <div class="key">W</div><div class="key">A</div><div class="key">S</div>
+          <div class="key">D</div><div class="key">L</div><div class="key">X</div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Stats -->
-  <section class="stats">
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-number">1ms</div><div class="stat-label">Minimum Delay</div></div>
-      <div class="stat-card"><div class="stat-number">&#8734;</div><div class="stat-label">Click Sequences</div></div>
-      <div class="stat-card"><div class="stat-number">10</div><div class="stat-label">Color Themes</div></div>
-      <div class="stat-card"><div class="stat-number">100%</div><div class="stat-label">Free</div></div>
-    </div>
-  </section>
-
-  <!-- Features -->
-  <section class="features" id="features">
-    <div class="section-header">
-      <h2>Powerful Features</h2>
-      <p>Everything you need to automate your clicks</p>
-    </div>
-    <div class="features-grid">
-
-      <div class="feature-card">
-        <div class="feature-icon">&#9889;</div>
-        <h3>Lightning Fast Speed</h3>
-        <p>Set the delay between actions precisely. From milliseconds to seconds – full control over your click speed.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon">&#127919;</div>
-        <h3>Click Sequences</h3>
-        <p>Create complex workflows with multiple actions. Different click types, coordinates, and individual workflows.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon">&#9881;&#65039;</div>
-        <h3>Simple Control</h3>
-        <p>F6 to start, F7 to stop. Intuitive hotkeys for instant control – even while using other programs.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon">&#128565;</div>
-        <h3>Hold Click</h3>
-        <p>New Hold Click action type – hold the mouse button down for a set duration. Perfect for drag actions and complex workflows.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon">&#128260;</div>
-        <h3>Repeat Mode</h3>
-        <p>Switch between continuous clicking and single execution. Perfect for gaming and productivity tasks.</p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon">&#127758;</div>
-        <h3>Multi-Language</h3>
-        <p>Available in multiple languages. Easy language switching directly in the settings.</p>
-      </div>
-
-      <div class="feature-card premium-card">
-        <div class="feature-icon">&#128274;</div>
-        <h3>Login System <span class="premium-tag">NEW</span></h3>
-        <p>Create your free account to unlock Premium features like Gold, Cyan, Pink, Orange, Black and White color themes – and more features coming soon.</p>
-      </div>
-
-      <div class="feature-card premium-card">
-        <div class="feature-icon">&#127912;</div>
-        <h3>10 Color Themes <span class="premium-tag">PREMIUM</span></h3>
-        <p>Choose from 10 stunning themes. Purple, Blue, Green and Red are free. Gold, Cyan, Pink, Orange, Black and White unlock after login.</p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Themes -->
-  <section class="themes-section" id="themes">
-    <div class="section-header">
-      <h2>10 Color Themes</h2>
-      <p>4 free themes, 6 premium themes unlocked after login</p>
-    </div>
-    <div class="themes-grid">
-      <div class="theme-dot t-purple">Purple</div>
-      <div class="theme-dot t-blue">Blue</div>
-      <div class="theme-dot t-green">Green</div>
-      <div class="theme-dot t-red">Red</div>
-      <div class="theme-dot t-gold">Gold<span class="premium-label">&#128274; Premium</span></div>
-      <div class="theme-dot t-cyan">Cyan<span class="premium-label">&#128274; Premium</span></div>
-      <div class="theme-dot t-pink">Pink<span class="premium-label">&#128274; Premium</span></div>
-      <div class="theme-dot t-orange">Orange<span class="premium-label">&#128274; Premium</span></div>
-      <div class="theme-dot t-black">Black<span class="premium-label">&#128274; Premium</span></div>
-      <div class="theme-dot t-white">White<span class="premium-label">&#128274; Premium</span></div>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section class="how-it-works" id="how">
-    <div class="section-header">
-      <h2>Ready in 3 Steps</h2>
-      <p>Automation has never been this easy</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-content">
-          <div class="step-number">01</div>
-          <h3>Download &amp; Install</h3>
-          <p>Download the latest version and start the program. No complicated installation, no hidden costs. Just download and get started.</p>
-        </div>
-        <div class="step-visual"><div class="step-icon">DOWNLOAD</div></div>
-      </div>
-      <div class="step">
-        <div class="step-content">
-          <div class="step-number">02</div>
-          <h3>Customize Settings</h3>
-          <p>Adjust the delay, choose your theme, configure hotkeys and build your click sequences. Login for premium themes.</p>
-        </div>
-        <div class="step-visual"><div class="step-icon">SETTINGS</div></div>
-      </div>
-      <div class="step">
-        <div class="step-content">
-          <div class="step-number">03</div>
-          <h3>Start &amp; Be Productive</h3>
-          <p>Press F6 to start and F7 to stop. That's it – you can now use your time for more important things.</p>
-        </div>
-        <div class="step-visual"><div class="step-icon">START</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Social -->
-  <section class="social-proof">
-    <div class="section-header">
-      <h2>Join the Community</h2>
-      <p>Become part of our growing community</p>
-    </div>
-    <div class="social-links">
-      <a href="https://discord.gg/cqtD82te96" class="social-card">
-        <img src="https://cdn.simpleicons.org/discord/5865F2" alt="Discord" class="social-icon">
-        <span>Discord Server</span>
-      </a>
-      <a href="mailto:snkgamesdevmode@gmail.com" class="social-card">
-        <img src="https://cdn.simpleicons.org/gmail/EA4335" alt="Email" class="social-icon">
-        <span>Contact Us</span>
-      </a>
-      <a href="https://www.tiktok.com/@sclicker" class="social-card">
-        <img src="https://cdn.simpleicons.org/tiktok/ffffff" alt="TikTok" class="social-icon">
-        <span>Follow on TikTok</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-section" id="download">
-    <div class="cta-box">
-      <h2>Ready to get started?</h2>
-      <p>Download sClicker v4.0 now for free and experience the future of click automation</p>
-      <div class="btn-badge-wrap" style="display:inline-block">
-        <span class="new-badge" style="border-color:#7e22ce">NEW VERSION</span>
-        <button onclick="openTermsModal()" class="btn" style="background:white;color:var(--purple-dark);font-family:inherit">
-          Free Download for Windows
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Rating -->
-  <section class="rating-section">
-    <div class="rating-box">
-      <h2>How would you rate sClicker?</h2>
-      <p>Your feedback helps us improve and grow. Share your experience!</p>
-      <div class="star-rating" id="starRating">
-        <span class="star" data-rating="1">&#9733;</span>
-        <span class="star" data-rating="2">&#9733;</span>
-        <span class="star" data-rating="3">&#9733;</span>
-        <span class="star" data-rating="4">&#9733;</span>
-        <span class="star" data-rating="5">&#9733;</span>
-        <span class="star" data-rating="6">&#9733;</span>
-        <span class="star" data-rating="7">&#9733;</span>
-        <span class="star" data-rating="8">&#9733;</span>
-        <span class="star" data-rating="9">&#9733;</span>
-        <span class="star" data-rating="10">&#9733;</span>
-      </div>
-      <form class="rating-form" id="ratingForm">
-        <input type="hidden" name="access_key" value="cfcb5156-8b98-407c-83d6-f9b135423206">
-        <input type="hidden" name="subject" id="emailSubject" value="sClicker Rating">
-        <input type="hidden" name="from_name" value="sClicker User">
-        <input type="hidden" name="rating" id="ratingValue" value="">
-        <input type="email" name="email" id="userEmail" placeholder="Your email address" required>
-        <textarea name="message" id="feedbackMessage" placeholder="Tell us what you think about sClicker... (optional)" maxlength="1000"></textarea>
-        <button type="submit" class="submit-rating" id="submitRating" disabled>Submit Rating</button>
-        <div class="rating-message" id="ratingMessage"></div>
-      </form>
-    </div>
-  </section>
-
-  <!-- Privacy Modal -->
-  <div id="privacyModal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal" onclick="closePrivacyModal()">&times;</span>
-      <h2>Privacy Policy</h2>
-
-      <div class="modal-section">
-        <h3>1. Data Controller</h3>
-        <p>SnakyGames<br>Email: <a href="mailto:snkgamesdevmode@gmail.com" style="color:var(--purple-light)">snkgamesdevmode@gmail.com</a></p>
-      </div>
-
-      <div class="modal-section">
-        <h3>2. What Data We Collect</h3>
-        <p>We only collect data you voluntarily provide to us:</p>
-        <ul style="margin-top:0.8rem;margin-left:1rem;color:var(--text-secondary)">
-          <li><strong style="color:var(--text-primary)">Rating Form:</strong> Your email address and optional feedback message when you submit a rating.</li>
-          <li><strong style="color:var(--text-primary)">Login System (in the app):</strong> Email address and password to create and manage your account.</li>
-        </ul>
-      </div>
-
-      <div class="modal-section">
-        <h3>3. Purpose of Data Processing</h3>
-        <ul style="margin-top:0.8rem;margin-left:1rem;color:var(--text-secondary)">
-          <li>Email addresses from the rating form are used solely to receive your feedback.</li>
-          <li>Account data is used to grant access to Premium features.</li>
-          <li>We do not share your data with third parties or use it for advertising.</li>
-        </ul>
-      </div>
-
-      <div class="modal-section">
-        <h3>4. Hosting &amp; Third-Party Services</h3>
-        <p>This website is hosted via <strong style="color:var(--text-primary)">Netlify</strong>, connected to our <strong style="color:var(--text-primary)">GitHub</strong> repository. Netlify may process technical access data such as IP addresses and request logs as part of their infrastructure. You can review their privacy policy here: <a href="https://www.netlify.com/privacy/" target="_blank" style="color:var(--purple-light)">netlify.com/privacy</a>.</p>
-        <p style="margin-top:1rem">GitHub stores the source code and release files. GitHub's privacy policy applies: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" style="color:var(--purple-light)">GitHub Privacy Statement</a>.</p>
-        <p style="margin-top:1rem">The rating form uses <strong style="color:var(--text-primary)">Web3Forms</strong> for form submission. Their privacy policy: <a href="https://web3forms.com/privacy" target="_blank" style="color:var(--purple-light)">web3forms.com/privacy</a>.</p>
-      </div>
-
-      <div class="modal-section">
-        <h3>5. The App (sClicker.exe)</h3>
-        <p>The sClicker application itself:</p>
-        <ul style="margin-top:0.8rem;margin-left:1rem;color:var(--text-secondary)">
-          <li>Makes <strong style="color:var(--text-primary)">no</strong> internet connections (except for the login feature)</li>
-          <li>Collects <strong style="color:var(--text-primary)">no</strong> usage data or telemetry</li>
-          <li>Does <strong style="color:var(--text-primary)">not</strong> access your files without your interaction</li>
-          <li>Contains <strong style="color:var(--text-primary)">no</strong> hidden or malicious code</li>
-        </ul>
-        <p style="margin-top:1rem">You can review the full source code on <a href="https://github.com/SNKgamesofficial/sClicker" target="_blank" style="color:var(--purple-light)">GitHub</a>.</p>
-      </div>
-
-      <div class="modal-section">
-        <h3>6. Your Rights</h3>
-        <p>You have the right to access, correct, delete, or object to the processing of your personal data at any time.</p>
-        <p style="margin-top:1rem">To exercise your rights, contact us at: <a href="mailto:snkgamesdevmode@gmail.com" style="color:var(--purple-light)">snkgamesdevmode@gmail.com</a></p>
-      </div>
-
-      <div class="modal-section">
-        <h3>7. Cookies</h3>
-        <p>This website does not use tracking cookies. No analytics or advertising services are used.</p>
-      </div>
-
-      <div class="modal-section">
-        <h3>8. Changes to This Policy</h3>
-        <p>We reserve the right to update this Privacy Policy at any time. The latest version will always be available on this website.</p>
-        <p style="margin-top:0.8rem;color:var(--text-secondary);font-size:0.9rem">Last updated: 2026 &middot; SnakyGames</p>
-      </div>
-
-      <button onclick="closePrivacyModal()" class="modal-button">Got it</button>
     </div>
   </div>
+</section>
 
-  <footer>
-    <p>&copy; 2026 SnakyGames. Built with passion for the community.</p>
-    <p style="margin-top:0.8rem;font-size:0.9rem">
-      <a href="#" onclick="openPrivacyModal();return false;">Privacy Policy</a>
-      &middot;
-      <a href="mailto:snkgamesdevmode@gmail.com">Contact</a>
-      &middot;
-      <a href="https://github.com/SNKgamesofficial/sClicker" target="_blank">GitHub</a>
-    </p>
-  </footer>
+<!-- Stats -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-number chrome-text">1ms</div><div class="stat-label">Minimum Delay</div></div>
+    <div class="stat-card"><div class="stat-number chrome-text">&#8734;</div><div class="stat-label">Click Sequences</div></div>
+    <div class="stat-card"><div class="stat-number chrome-text">10</div><div class="stat-label">Color Themes</div></div>
+    <div class="stat-card"><div class="stat-number chrome-text">100%</div><div class="stat-label">Free</div></div>
+  </div>
+</section>
 
-  <script>
-    let downloadCountdown = 0;
-    let countdownInterval = null;
-    let timerFinished = false;
-    let selectedRating = 0;
+<!-- Features -->
+<section class="features" id="features">
+  <div class="section-header">
+    <div class="eyebrow"><span class="eyebrow-dot"></span>Features</div>
+    <h2>Everything you need to automate your clicks</h2>
+    <p>From precise timing control to complex sequences</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">&#9889;</div>
+      <h3>Lightning Fast Speed</h3>
+      <p>Set the delay between actions precisely. From milliseconds to seconds – full control over your click speed.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#127919;</div>
+      <h3>Click Sequences</h3>
+      <p>Create complex workflows with multiple actions. Different click types, coordinates, and individual workflows.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#9881;&#65039;</div>
+      <h3>Simple Control</h3>
+      <p>F6 to start, F7 to stop. Intuitive hotkeys for instant control – even while using other programs.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128065;</div>
+      <h3>Hold Click</h3>
+      <p>New Hold Click action type – hold the mouse button down for a set duration. Perfect for drag actions and complex workflows.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128260;</div>
+      <h3>Repeat Mode</h3>
+      <p>Switch between continuous clicking and single execution. Perfect for gaming and productivity tasks.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#127758;</div>
+      <h3>Multi-Language</h3>
+      <p>Available in multiple languages. Easy language switching directly in the settings.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128274;</div>
+      <h3>Login System <span class="tag">NEW</span></h3>
+      <p>Create your free account to unlock premium themes like Gold, Rose, Amber, Onyx and Pearl – and more features coming soon.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#127912;</div>
+      <h3>10 Color Themes <span class="tag">PREMIUM</span></h3>
+      <p>Choose from 10 stunning themes. Cyan, Violet, Magenta and Mint are free. Gold, Slate, Rose, Amber, Onyx and Pearl unlock after login.</p>
+    </div>
+  </div>
+</section>
 
-    // Stars
-    const stars = document.querySelectorAll('.star');
-    const submitRating = document.getElementById('submitRating');
-    const ratingMessage = document.getElementById('ratingMessage');
+<!-- Themes -->
+<section class="themes-section" id="themes">
+  <div class="section-header">
+    <div class="eyebrow"><span class="eyebrow-dot"></span>Themes</div>
+    <h2>10 Color Themes</h2>
+    <p>4 free themes, 6 premium themes unlocked after login</p>
+  </div>
+  <div class="themes-grid">
+    <div class="theme-dot"><div class="swatch sw-cyan"></div>Cyan</div>
+    <div class="theme-dot"><div class="swatch sw-violet"></div>Violet</div>
+    <div class="theme-dot"><div class="swatch sw-magenta"></div>Magenta</div>
+    <div class="theme-dot"><div class="swatch sw-mint"></div>Mint</div>
+    <div class="theme-dot"><div class="swatch sw-gold"></div>Gold<span class="lock-label">&#128274; Premium</span></div>
+    <div class="theme-dot"><div class="swatch sw-slate"></div>Slate<span class="lock-label">&#128274; Premium</span></div>
+    <div class="theme-dot"><div class="swatch sw-rose"></div>Rose<span class="lock-label">&#128274; Premium</span></div>
+    <div class="theme-dot"><div class="swatch sw-amber"></div>Amber<span class="lock-label">&#128274; Premium</span></div>
+    <div class="theme-dot"><div class="swatch sw-onyx"></div>Onyx<span class="lock-label">&#128274; Premium</span></div>
+    <div class="theme-dot"><div class="swatch sw-pearl"></div>Pearl<span class="lock-label">&#128274; Premium</span></div>
+  </div>
+</section>
 
-    stars.forEach(star => {
-      star.addEventListener('click', function() {
-        selectedRating = parseInt(this.getAttribute('data-rating'));
-        updateStars();
-        submitRating.disabled = false;
-      });
-      star.addEventListener('mouseenter', function() {
-        highlightStars(parseInt(this.getAttribute('data-rating')));
-      });
+<!-- How it works -->
+<section class="how-it-works" id="how">
+  <div class="section-header">
+    <div class="eyebrow"><span class="eyebrow-dot"></span>Process</div>
+    <h2>Ready in 3 Steps</h2>
+    <p>Automation has never been this easy</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-content">
+        <div class="step-badge">1</div>
+        <h3>Download &amp; Install</h3>
+        <p>Download the latest version and start the program. No complicated installation, no hidden costs. Just download and get started.</p>
+      </div>
+      <div class="step-visual"><span>DOWNLOAD</span></div>
+    </div>
+    <div class="step">
+      <div class="step-content">
+        <div class="step-badge">2</div>
+        <h3>Customize Settings</h3>
+        <p>Adjust the delay, choose your theme, configure hotkeys and build your click sequences. Login for premium themes.</p>
+      </div>
+      <div class="step-visual"><span>SETTINGS</span></div>
+    </div>
+    <div class="step">
+      <div class="step-content">
+        <div class="step-badge">3</div>
+        <h3>Start &amp; Be Productive</h3>
+        <p>Press F6 to start and F7 to stop. That's it – you can now use your time for more important things.</p>
+      </div>
+      <div class="step-visual"><span>START</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Social -->
+<section class="social-proof">
+  <div class="section-header">
+    <div class="eyebrow"><span class="eyebrow-dot"></span>Community</div>
+    <h2>Join the Community</h2>
+    <p>Become part of our growing community</p>
+  </div>
+  <div class="social-links">
+    <a href="https://discord.gg/cqtD82te96" class="social-card">
+      <img src="https://cdn.simpleicons.org/discord/33e0ff" alt="Discord" class="social-icon">
+      <span>Discord Server</span>
+    </a>
+    <a href="mailto:snkgamesdevmode@gmail.com" class="social-card">
+      <img src="https://cdn.simpleicons.org/gmail/ff5fd8" alt="Email" class="social-icon">
+      <span>Contact Us</span>
+    </a>
+    <a href="https://www.tiktok.com/@sclicker" class="social-card">
+      <img src="https://cdn.simpleicons.org/tiktok/f2f2f7" alt="TikTok" class="social-icon">
+      <span>Follow on TikTok</span>
+    </a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="download">
+  <div class="cta-box">
+    <h2>Ready to get started?</h2>
+    <p>Download sClicker V5 (Unfinished) for free and experience the future of click automation</p>
+    <div class="download-row">
+      <button onclick="openTermsModal()" class="btn btn-chrome">Free Download for Windows</button>
+      <button class="btn btn-disabled" disabled type="button" aria-disabled="true">For macOS <span class="soon">SOON</span></button>
+      <button class="btn btn-disabled" disabled type="button" aria-disabled="true">For Linux <span class="soon">SOON</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- Rating -->
+<section class="rating-section">
+  <div class="rating-box">
+    <h2>How would you rate sClicker?</h2>
+    <p>Your feedback helps us improve and grow. Share your experience!</p>
+    <div class="star-rating" id="starRating">
+      <span class="star" data-rating="1">&#9733;</span>
+      <span class="star" data-rating="2">&#9733;</span>
+      <span class="star" data-rating="3">&#9733;</span>
+      <span class="star" data-rating="4">&#9733;</span>
+      <span class="star" data-rating="5">&#9733;</span>
+      <span class="star" data-rating="6">&#9733;</span>
+      <span class="star" data-rating="7">&#9733;</span>
+      <span class="star" data-rating="8">&#9733;</span>
+      <span class="star" data-rating="9">&#9733;</span>
+      <span class="star" data-rating="10">&#9733;</span>
+    </div>
+    <form class="rating-form" id="ratingForm">
+      <input type="hidden" name="access_key" value="cfcb5156-8b98-407c-83d6-f9b135423206">
+      <input type="hidden" name="subject" id="emailSubject" value="sClicker Rating">
+      <input type="hidden" name="from_name" value="sClicker User">
+      <input type="hidden" name="rating" id="ratingValue" value="">
+      <input type="email" name="email" id="userEmail" placeholder="Your email address" required>
+      <textarea name="message" id="feedbackMessage" placeholder="Tell us what you think about sClicker... (optional)" maxlength="1000"></textarea>
+      <button type="submit" class="submit-rating" id="submitRating" disabled>Submit Rating</button>
+      <div class="rating-message" id="ratingMessage"></div>
+    </form>
+  </div>
+</section>
+
+<!-- Privacy Modal -->
+<div id="privacyModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closePrivacyModal()">&times;</span>
+    <h2 class="chrome-text">Privacy Policy</h2>
+    <div class="modal-section">
+      <h3>1. Data Controller</h3>
+      <p>SnakyGames<br>Email: <a href="mailto:snkgamesdevmode@gmail.com" style="color:var(--c1)">snkgamesdevmode@gmail.com</a></p>
+    </div>
+    <div class="modal-section">
+      <h3>2. What Data We Collect</h3>
+      <p>We only collect data you voluntarily provide to us:</p>
+      <ul>
+        <li><strong style="color:var(--text)">Rating Form:</strong> Your email address and optional feedback message when you submit a rating.</li>
+        <li><strong style="color:var(--text)">Login System (in the app):</strong> Email address and password to create and manage your account.</li>
+      </ul>
+    </div>
+    <div class="modal-section">
+      <h3>3. Purpose of Data Processing</h3>
+      <ul>
+        <li>Email addresses from the rating form are used solely to receive your feedback.</li>
+        <li>Account data is used to grant access to Premium features.</li>
+        <li>We do not share your data with third parties or use it for advertising.</li>
+      </ul>
+    </div>
+    <div class="modal-section">
+      <h3>4. Hosting &amp; Third-Party Services</h3>
+      <p>This website is hosted via <strong style="color:var(--text)">Netlify</strong>, connected to our <strong style="color:var(--text)">GitHub</strong> repository. Netlify may process technical access data such as IP addresses and request logs as part of their infrastructure. You can review their privacy policy here: <a href="https://www.netlify.com/privacy/" target="_blank" style="color:var(--c1)">netlify.com/privacy</a>.</p>
+      <p style="margin-top:1rem">GitHub stores the source code and release files. GitHub's privacy policy applies: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" style="color:var(--c1)">GitHub Privacy Statement</a>.</p>
+      <p style="margin-top:1rem">The rating form uses <strong style="color:var(--text)">Web3Forms</strong> for form submission. Their privacy policy: <a href="https://web3forms.com/privacy" target="_blank" style="color:var(--c1)">web3forms.com/privacy</a>.</p>
+    </div>
+    <div class="modal-section">
+      <h3>5. The App (sClicker.exe)</h3>
+      <p>The sClicker application itself:</p>
+      <ul>
+        <li>Makes <strong style="color:var(--text)">no</strong> internet connections (except for the login feature)</li>
+        <li>Collects <strong style="color:var(--text)">no</strong> usage data or telemetry</li>
+        <li>Does <strong style="color:var(--text)">not</strong> access your files without your interaction</li>
+        <li>Contains <strong style="color:var(--text)">no</strong> hidden or malicious code</li>
+      </ul>
+      <p style="margin-top:1rem">You can review the full source code on <a href="https://github.com/SNKgamesofficial/sClicker" target="_blank" style="color:var(--c1)">GitHub</a>.</p>
+    </div>
+    <div class="modal-section">
+      <h3>6. Your Rights</h3>
+      <p>You have the right to access, correct, delete, or object to the processing of your personal data at any time.</p>
+      <p style="margin-top:1rem">To exercise your rights, contact us at: <a href="mailto:snkgamesdevmode@gmail.com" style="color:var(--c1)">snkgamesdevmode@gmail.com</a></p>
+    </div>
+    <div class="modal-section">
+      <h3>7. Cookies</h3>
+      <p>This website does not use tracking cookies. No analytics or advertising services are used.</p>
+    </div>
+    <div class="modal-section">
+      <h3>8. Changes to This Policy</h3>
+      <p>We reserve the right to update this Privacy Policy at any time. The latest version will always be available on this website.</p>
+      <p style="margin-top:0.8rem;color:var(--text-dim);font-size:0.9rem">Last updated: 2026 &middot; SnakyGames</p>
+    </div>
+    <button onclick="closePrivacyModal()" class="modal-button">Got it</button>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 SnakyGames. Built with passion for the community. · Version V5 (Unfinished)</p>
+  <p style="margin-top:0.8rem">
+    <a href="#" onclick="openPrivacyModal();return false;">Privacy Policy</a>
+    &middot;
+    <a href="mailto:snkgamesdevmode@gmail.com">Contact</a>
+    &middot;
+    <a href="https://github.com/SNKgamesofficial/sClicker" target="_blank">GitHub</a>
+  </p>
+</footer>
+
+<script>
+  let downloadCountdown = 0;
+  let countdownInterval = null;
+  let timerFinished = false;
+  let selectedRating = 0;
+
+  const stars = document.querySelectorAll('.star');
+  const submitRating = document.getElementById('submitRating');
+  const ratingMessage = document.getElementById('ratingMessage');
+
+  stars.forEach(star => {
+    star.addEventListener('click', function() {
+      selectedRating = parseInt(this.getAttribute('data-rating'));
+      updateStars();
+      submitRating.disabled = false;
     });
-    document.getElementById('starRating').addEventListener('mouseleave', updateStars);
-
-    function highlightStars(r) {
-      stars.forEach(s => s.classList.toggle('active', parseInt(s.getAttribute('data-rating')) <= r));
-    }
-    function updateStars() { highlightStars(selectedRating); }
-
-    document.getElementById('ratingForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      if (!selectedRating) { showMsg('Please select a rating before submitting.', 'error'); return; }
-      submitRating.disabled = true;
-      submitRating.textContent = 'Sending...';
-      document.getElementById('ratingValue').value = selectedRating + '/10 Stars';
-      document.getElementById('emailSubject').value = 'sClicker Rating: ' + selectedRating + '/10 Stars';
-      try {
-        const fd = new FormData(this);
-        fd.append('redirect', 'false');
-        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
-        const data = await res.json();
-        if (data.success) {
-          showMsg('Thank you! Your rating has been submitted. ⭐', 'success');
-          setTimeout(() => {
-            selectedRating = 0; updateStars();
-            document.getElementById('feedbackMessage').value = '';
-            submitRating.disabled = true;
-            submitRating.textContent = 'Submit Rating';
-            ratingMessage.style.display = 'none';
-          }, 3000);
-        } else throw new Error(data.message || 'Submission failed');
-      } catch(err) {
-        showMsg('Error: ' + err.message + '. Email us at snkgamesdevmode@gmail.com', 'error');
-        submitRating.disabled = false;
-        submitRating.textContent = 'Submit Rating';
-      }
+    star.addEventListener('mouseenter', function() {
+      highlightStars(parseInt(this.getAttribute('data-rating')));
     });
+  });
+  document.getElementById('starRating').addEventListener('mouseleave', updateStars);
 
-    function showMsg(msg, type) {
-      ratingMessage.textContent = msg;
-      ratingMessage.className = 'rating-message ' + type;
-      ratingMessage.style.display = 'block';
+  function highlightStars(r) {
+    stars.forEach(s => s.classList.toggle('active', parseInt(s.getAttribute('data-rating')) <= r));
+  }
+  function updateStars() { highlightStars(selectedRating); }
+
+  document.getElementById('ratingForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    if (!selectedRating) { showMsg('Please select a rating before submitting.', 'error'); return; }
+    submitRating.disabled = true;
+    submitRating.textContent = 'Sending...';
+    document.getElementById('ratingValue').value = selectedRating + '/10 Stars';
+    document.getElementById('emailSubject').value = 'sClicker Rating: ' + selectedRating + '/10 Stars';
+    try {
+      const fd = new FormData(this);
+      fd.append('redirect', 'false');
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (data.success) {
+        showMsg('Thank you! Your rating has been submitted. ⭐', 'success');
+        setTimeout(() => {
+          selectedRating = 0; updateStars();
+          document.getElementById('feedbackMessage').value = '';
+          submitRating.disabled = true;
+          submitRating.textContent = 'Submit Rating';
+          ratingMessage.style.display = 'none';
+        }, 3000);
+      } else throw new Error(data.message || 'Submission failed');
+    } catch(err) {
+      showMsg('Error: ' + err.message + '. Email us at snkgamesdevmode@gmail.com', 'error');
+      submitRating.disabled = false;
+      submitRating.textContent = 'Submit Rating';
     }
+  });
 
-    // Modals
-    function openWarningModal() { document.getElementById('warningModal').style.display = 'block'; }
-    function closeWarningModal() { document.getElementById('warningModal').style.display = 'none'; }
-    function openWarningModalFromTerms() { closeTermsModal(); openWarningModal(); }
+  function showMsg(msg, type) {
+    ratingMessage.textContent = msg;
+    ratingMessage.className = 'rating-message ' + type;
+    ratingMessage.style.display = 'block';
+  }
 
-    function openTermsModal() {
-      document.getElementById('termsModal').style.display = 'block';
-      document.getElementById('termsCheckbox').checked = false;
-      timerFinished = false;
-      updateDownloadButton();
-      startTimer();
-    }
-    function closeTermsModal() {
-      document.getElementById('termsModal').style.display = 'none';
-      if (countdownInterval) clearInterval(countdownInterval);
-    }
+  function openWarningModal() { document.getElementById('warningModal').style.display = 'block'; }
+  function closeWarningModal() { document.getElementById('warningModal').style.display = 'none'; }
+  function openWarningModalFromTerms() { closeTermsModal(); openWarningModal(); }
 
-    function updateDownloadButton() {
-      const checked = document.getElementById('termsCheckbox').checked;
-      document.getElementById('downloadButton').disabled = !timerFinished || !checked;
-    }
+  function openTermsModal() {
+    document.getElementById('termsModal').style.display = 'block';
+    document.getElementById('termsCheckbox').checked = false;
+    timerFinished = false;
+    updateDownloadButton();
+    startTimer();
+  }
+  function closeTermsModal() {
+    document.getElementById('termsModal').style.display = 'none';
+    if (countdownInterval) clearInterval(countdownInterval);
+  }
 
-    function startTimer() {
-      downloadCountdown = 10;
-      document.getElementById('downloadButton').disabled = true;
+  function updateDownloadButton() {
+    const checked = document.getElementById('termsCheckbox').checked;
+    document.getElementById('downloadButton').disabled = !timerFinished || !checked;
+  }
+
+  function startTimer() {
+    downloadCountdown = 10;
+    document.getElementById('downloadButton').disabled = true;
+    updateCountdown();
+    countdownInterval = setInterval(() => {
+      downloadCountdown--;
       updateCountdown();
-      countdownInterval = setInterval(() => {
-        downloadCountdown--;
-        updateCountdown();
-        if (downloadCountdown <= 0) {
-          clearInterval(countdownInterval);
-          timerFinished = true;
-          updateDownloadButton();
-          document.getElementById('downloadButton').textContent = 'I Accept - Download sClicker';
-        }
-      }, 1000);
-    }
-
-    function updateCountdown() {
-      document.getElementById('downloadButton').textContent = 'I Accept - Download sClicker (' + downloadCountdown + 's)';
-    }
-
-    function startDownload() {
-      if (timerFinished && document.getElementById('termsCheckbox').checked) {
-        window.location.href = 'https://github.com/SNKgamesofficial/sClicker/releases/download/4.0/sClicker.exe';
-        closeTermsModal();
+      if (downloadCountdown <= 0) {
+        clearInterval(countdownInterval);
+        timerFinished = true;
+        updateDownloadButton();
+        document.getElementById('downloadButton').textContent = 'I Accept - Download sClicker';
       }
+    }, 1000);
+  }
+
+  function updateCountdown() {
+    document.getElementById('downloadButton').textContent = 'I Accept - Download sClicker (' + downloadCountdown + 's)';
+  }
+
+  function startDownload() {
+    if (timerFinished && document.getElementById('termsCheckbox').checked) {
+      window.location.href = 'https://github.com/SNKgamesofficial/sClicker/releases/download/5.0UNF/sClicker.exe';
+      closeTermsModal();
     }
+  }
 
-    function openPrivacyModal() { document.getElementById('privacyModal').style.display = 'block'; }
-    function closePrivacyModal() { document.getElementById('privacyModal').style.display = 'none'; }
+  function openPrivacyModal() { document.getElementById('privacyModal').style.display = 'block'; }
+  function closePrivacyModal() { document.getElementById('privacyModal').style.display = 'none'; }
 
-    window.onclick = function(e) {
-      if (e.target == document.getElementById('warningModal')) closeWarningModal();
-      if (e.target == document.getElementById('termsModal')) closeTermsModal();
-      if (e.target == document.getElementById('privacyModal')) closePrivacyModal();
-    };
-  </script>
+  window.onclick = function(e) {
+    if (e.target == document.getElementById('warningModal')) closeWarningModal();
+    if (e.target == document.getElementById('termsModal')) closeTermsModal();
+    if (e.target == document.getElementById('privacyModal')) closePrivacyModal();
+  };
+</script>
 </body>
 </html>
